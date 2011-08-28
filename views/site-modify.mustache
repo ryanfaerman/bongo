@@ -1,0 +1,66 @@
+<script type="text/coffeescript">
+
+$ ->
+	$('form').bind 'reset', -> history.back()
+	
+	###
+	$empty = $('#emptyDomain.formRow').detach()
+	$('input[name="domain[]"]:last-child').live 'keyup', (e) ->
+		unless e.keyCode is 8 then $(this).after $empty.clone().attr('id', '')
+	
+	$('input[name="domain[]"]').live 'keyup', (e) ->
+		if e.keyCode is 8 #delete
+			if $(this).val() is "" and $('input[name="domain[]"]').length > 2
+				$(this).remove()
+				$('input[name="domain[]"]:last-child').focus()
+		
+	###
+</script>
+<fieldset class="split-group">
+	<legend>Create a new site</legend>
+	<form method="post">
+		{{#method}}<input type="hidden" name="_method" value="{{method}}">{{/method}}
+		{{#_id}}<input type="hidden" name="_id" value="{{_id}}">{{/_id}}
+		
+		<div id="formContent" class="formCol split-left">
+			<div class="formRow">
+				<input type="text" placeholder="Title" name="title" value="{{title}}"/>
+			</div>
+			
+			
+			<div class="formRow">
+				<input type="text" placeholder="example.com" name="domain" value="{{domain}}"/>
+			</div>
+			
+			<!--
+			<div id="emptyDomain" class="formRow">
+				<input type="text" placeholder="www.example.com" name="domain[]" />
+			</div>
+			-->
+			
+			
+		</div>
+		
+		<div id="formSideBar" class="formCol split-right">
+			<div class="formRow">
+				<select name="mode">
+					<option value="online">online</option>
+					<option value="offline" selected>offline</option>
+				</select>
+			</div>
+			<div class="formRow">
+				<input type="text" placeholder="Google Analytics ID" name="ganalytics" value="{{ganalytics}}"/>
+			</div>
+		</div>
+		
+		<br class="clearfix" />
+		<div class="formRow button-container">
+			<!--<a href="#delete" class="big danger button">Delete</a>-->
+			<div class="button-group">
+				<button type="reset" class="big danger button">Cancel</button>
+				<button type="submit" class="big button">Save</button>
+			</div>
+			
+		</div>
+	</form>
+</fieldset>

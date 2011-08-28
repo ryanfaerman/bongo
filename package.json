@@ -1,0 +1,12 @@
+{
+    "name": "bongo"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+      "express": "2.4.3"
+	, "mongodb": "0.9.6-13"
+	, "mongoose": "2.0.2"
+	, "underscore": ">= 1.1.7"
+	, "markdown": "0.2.1"
+  }
+}

@@ -1,0 +1,76 @@
+.clearfix {
+	clear: both;
+}
+
+fieldset {
+	border: 1px solid #888;
+	border-radius: 3px;
+	padding-top: 15px;
+}
+
+legend {
+	color: #111;
+	font-size: 24px;
+}
+
+.formRow {
+	margin-bottom: 15px;
+}
+
+.formRow.directions, .formRow.directions p {
+	margin-bottom: 0px;
+}
+
+input, textarea, select {
+	width: 100%;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	padding: 6px;
+	font-size: 16px;
+	font-family: Georgia, Palatino, serif;
+	outline: 0 none;
+}
+
+select {
+	height: 33px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+input:focus, textarea:focus {
+	border-color: #aaa;
+}
+
+textarea {
+	height: 300px;
+}
+
+.split-group {
+	
+}
+
+.split-left {
+	float: left;
+	width: 75%;
+}
+
+.split-right {
+	float: right;
+	width: 24%;
+}
+
+input[name=release-date], #emptyDomain.formRow {
+	display: none;
+}
+
+table {
+	width: 100%;
+}
+
+td {
+	text-align: center;
+}
+
+tbody tr:nth-child(odd) {
+	background: rgba(0,0,0,.1);
+}

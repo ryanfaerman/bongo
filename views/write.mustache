@@ -1,0 +1,75 @@
+<script type="text/coffeescript">
+
+$ ->
+	unless $('input[name=url]').val() then $('input[name=title]').slugIt
+		events: 'keyup',
+		output: 'input[name=url]'
+	
+	
+	$('select[name=release]').change (e) ->
+		$release = $('input[name=release-date]')
+		unless $(this).val() is 'date' then $release.hide() else $release.show()
+	
+	$('a[href=#delete]').click (e) ->
+		e.preventDefault()
+	
+	$('form').bind 'reset', -> history.back()
+
+</script>
+<fieldset class="split-group">
+	<legend>Write a Post</legend>
+	<form method="post">
+		{{#method}}<input type="hidden" name="_method" value="{{method}}">{{/method}}
+		{{#_id}}<input type="hidden" name="_id" value="{{_id}}">{{/_id}}
+		
+		<div id="formContent" class="formCol split-left">
+			<div class="formRow">
+				<input type="text" placeholder="Title" name="title" value="{{title}}"/>
+			</div>
+
+			<div class="formRow">
+				<textarea placeholder="Content" name="content">{{content}}</textarea>
+			</div>
+			
+			<div class="formRow button-container">
+				<!--<a href="#delete" class="big danger button">Delete</a>-->
+				<button type="reset" class="big danger button">Cancel</button>
+				<div class="button-group">
+					<a href="#" class="big primary button">Preview</a>
+					<button type="submit" class="big button">Save</button>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		<div id="formSideBar" class="formCol split-right">
+			<div class="formRow">
+				<select name="release">
+					{{#method}}
+					<option value="published">published</option>
+					{{/method}}
+					{{^method}}
+					<option value="published">publish now</option>
+					<option value="queue">add to queue</option>
+					<option value="date">publish on</option>
+					<option value="draft">save as draft</option>
+					{{/method}}
+					
+					<option value="private">private</option>
+				</select>
+			</div>
+			<div class="formRow">
+				<input type="text" placeholder="release date" name="release-date" value="{{release-date}}"/>
+			</div>
+			<div class="formRow">
+				<input type="text" placeholder="url" name="url" value="{{url}}"/>
+			</div>
+			
+			<div class="formRow">
+				<input type="text" placeholder="tags" name="tags" value="{{tags}}"/>
+			</div>
+		</div>
+		
+	</form>
+</fieldset>
