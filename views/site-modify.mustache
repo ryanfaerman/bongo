@@ -3,18 +3,23 @@
 $ ->
 	$('form').bind 'reset', -> history.back()
 	
-	###
+	
 	$empty = $('#emptyDomain.formRow').detach()
-	$('input[name="domain[]"]:last-child').live 'keyup', (e) ->
+	$('input[name="domains[]"]:last-child').live 'keyup', (e) ->
 		unless e.keyCode is 8 then $(this).after $empty.clone().attr('id', '')
 	
-	$('input[name="domain[]"]').live 'keyup', (e) ->
+	$('input[name="domains[]"]').live 'keyup', (e) ->
 		if e.keyCode is 8 #delete
-			if $(this).val() is "" and $('input[name="domain[]"]').length > 2
+			if $(this).val() is "" and $('input[name="domains[]"]').length > 2
 				$(this).remove()
-				$('input[name="domain[]"]:last-child').focus()
-		
-	###
+				$('input[name="domains[]"]:last-child').focus()
+	
+	domains = "{{domains}}".split(',')
+	$.each domains, (i, e) ->
+		if i is 0
+			$('input[name="domains[]"]').val e
+		else
+			$('input[name="domains[]"]:last-child').after $empty.clone().attr('id', '').find('input').val(e)
 </script>
 <fieldset class="split-group">
 	<legend>Create a new site</legend>
@@ -28,24 +33,24 @@ $ ->
 			</div>
 			
 			
+			
 			<div class="formRow">
-				<input type="text" placeholder="example.com" name="domain" value="{{domain}}"/>
+				<input type="text" placeholder="example.com" name="domains[]" value="{{domain}}"/>
+			</div>
+
+			<div id="emptyDomain" class="formRow">
+				<input type="text" placeholder="www.example.com" name="domains[]" />
 			</div>
 			
-			<!--
-			<div id="emptyDomain" class="formRow">
-				<input type="text" placeholder="www.example.com" name="domain[]" />
-			</div>
-			-->
 			
 			
 		</div>
 		
 		<div id="formSideBar" class="formCol split-right">
 			<div class="formRow">
-				<select name="mode">
-					<option value="online">online</option>
-					<option value="offline" selected>offline</option>
+				<select name="active">
+					<option value="true" {{#active}}selected{{/active}}>online</option>
+					<option value="false" {{^active}}selected{{/active}}>offline</option>
 				</select>
 			</div>
 			<div class="formRow">

@@ -59,7 +59,7 @@ textarea {
 	width: 24%;
 }
 
-input[name=release-date], #emptyDomain.formRow {
+input[name=release_date], #emptyDomain.formRow {
 	display: none;
 }
 

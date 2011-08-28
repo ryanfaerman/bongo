@@ -13,10 +13,13 @@
 	<tbody>
 		{{#sites}}
 		<tr>
-			<td><a href="/sites/modify/{{_id}}">{{domain}}</a></td>
+			<td>
+				
+				<a href="/sites/modify/{{_id}}">{{domains}}</a>
+			</td>
 			<td>{{title}}</td>
 			<td>{{ganalytics}}</td>
-			<td>{{mode}}</td>
+			<td>{{#active}}online{{/active}}{{^active}}offline{{/active}}</td>
 		</tr>
 		{{/sites}}
 	</tbody>

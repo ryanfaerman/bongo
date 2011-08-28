@@ -1,7 +1,8 @@
 <html>
 <head>
-	<title>{{title}}</title><link rel="stylesheet" href="../public/stylesheets/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
-	<link rel="stylesheet" href="/stylesheets/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<title>{{title}}{{^title}}Bongo{{/title}}</title>
+	{{>scripts}}
+	{{>styles}}
 </head>
 <body>
 {{{yield}}}

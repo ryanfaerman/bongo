@@ -7,7 +7,7 @@ $ ->
 	
 	
 	$('select[name=release]').change (e) ->
-		$release = $('input[name=release-date]')
+		$release = $('input[name=release_date]')
 		unless $(this).val() is 'date' then $release.hide() else $release.show()
 	
 	$('a[href=#delete]').click (e) ->
@@ -60,7 +60,7 @@ $ ->
 				</select>
 			</div>
 			<div class="formRow">
-				<input type="text" placeholder="release date" name="release-date" value="{{release-date}}"/>
+				<input type="text" placeholder="release date" name="release_date" value="{{release-date}}"/>
 			</div>
 			<div class="formRow">
 				<input type="text" placeholder="url" name="url" value="{{url}}"/>

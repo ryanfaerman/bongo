@@ -1,2 +1,9 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+{{#pages}}
+	<h1>{{title}}</h1>
+	<p>{{content}}</p>
+{{/pages}}
+
+{{^pages}}
+<h1>Nothing Published</h1>
+<p>Maybe try <a href="/write">writing</a> something?</p>
+{{/pages}}
