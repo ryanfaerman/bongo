@@ -1,0 +1,63 @@
+
+body {
+	padding-top: 40px;
+}
+
+
+audio {
+	width: 90%;
+	margin-bottom: @baseline/2;
+}
+
+.horizontal_nav {
+	.tabs();
+	border-bottom: 0;
+	.border-radius(3px);
+	
+	li {
+		a:hover, 
+		&.active a {
+			.border-radius(3px);
+			border: 0;
+			text-decoration: none;
+		}
+		
+		&.open .dropdown-toggle {
+			.border-radius(3px 3px 0 0);
+		}
+	}
+	
+}
+
+h1, h2, h3, h4, h5, h6 {
+	a {
+		color: inherit;
+		
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+.introduction {
+	.well();
+	
+	img {
+		.border-radius(3px);
+		border: 1px solid @gray;
+	}
+	
+	
+}
+
+.episode {
+	.page-header {
+		border-color: lighten(@linkColor, 30%);
+
+		h2 {
+			small {
+				color: @gray;
+			}
+		}
+	}
+}

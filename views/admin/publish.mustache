@@ -1,0 +1,120 @@
+<script type="text/coffeescript">
+
+$ ->
+	
+	$('select[name=release]').change (e) ->
+		$release = $('input[name=release_date]').parents('.clearfix')
+		unless $(this).val() is 'date' then $release.hide() else $release.show()
+	
+	$('a[href=#delete]').click (e) ->
+		e.preventDefault()
+	
+	$('form').bind 'reset', -> history.back()
+
+</script>
+
+<div class="row">
+	<form method="post" class="form-stacked" enctype="multipart/form-data">
+		{{#method}}<input type="hidden" name="_method" value="{{method}}">{{/method}}
+		{{#_id}}<input type="hidden" name="_id" value="{{_id}}">{{/_id}}
+		<div class="span10 columns">
+			<fieldset>
+				<legend>Episode Details</legend>
+				<div class="clearfix">
+					<label for="title">Title</label>
+					<div class="input">
+						<input class="xxlarge" id="title" name="title" size="30" type="text" />
+					</div>
+				</div><!-- /clearfix -->
+
+				<div class="clearfix">
+					<label for="summary">Summary</label>
+					<div class="input">
+						<textarea class="xxlarge" id="summary" name="summary" rows="5"></textarea>
+						<span class="help-block">Markdown Syntax Supported</span>
+					</div>
+				</div><!-- /clearfix -->
+				
+				<div class="clearfix">
+					<label for="links">Links</label>
+					<div class="input">
+						<textarea class="xxlarge" id="links" name="links" rows="5"></textarea>
+						<span class="help-block">Markdown Syntax Supported</span>
+					</div>
+				</div><!-- /clearfix -->
+
+			</fieldset>
+		</div>
+		<div class="span5 columns">
+			
+			<fieldset>
+				<legend>Media File</legend>
+				<p>Select a file to upload <strong>OR</strong> provide a URL to a previously uploaded file.</p>
+				
+				
+				
+				<div class="clearfix">
+					<label for="file">Upload File</label>
+					<div class="input-file">
+						<input class="large" id="file" name="audio" type="file" />
+					</div>
+				</div><!-- /clearfix -->
+
+
+				<div class="clearfix">
+					<label for="remote_file">File URL</label>
+					<div class="input">
+						<div class="input-prepend">
+							<label class="add-on">
+								<input type="checkbox" />
+							</label>
+							<input class="large" id="remote_file" name="remote_file" size="30" type="text" placeholder="http://example.com/audio.mp3"/>
+							
+						</div>
+					</div>
+				</div><!-- /clearfix -->
+
+			</fieldset>
+			<hr />
+			<fieldset>
+				<legend>Publication Options</legend>
+				
+				
+				<div class="clearfix">
+					<label for="release">Release</label>
+					<div class="input">
+						<select name="release" class="large">
+							{{#method}}
+							<option value="published">published</option>
+							{{/method}}
+							{{^method}}
+							<option value="published">publish now</option>
+							<option value="queue">add to queue</option>
+							<option value="date">publish on</option>
+							<option value="draft" selected>save as draft</option>
+							{{/method}}
+
+						</select>
+					</div>
+				</div><!-- /clearfix -->
+				
+				<div class="clearfix" style="display: none">
+					<label for="number">Publish Date</label>
+					<div class="input">
+						<input class="large" id="number" name="release_date" value="{{release-date}}" size="30" type="text" />
+						<span class="help-block">Publish on this date</span>
+					</div>
+				</div><!-- /clearfix -->
+			</fieldset>
+		</div>
+		
+		<div class="row">
+			<div class="span16 columms">
+				<div class="actions">
+					<button type="submit" class="btn primary">Save Episode</button>
+					<button type="reset" class="btn">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

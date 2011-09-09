@@ -1,0 +1,60 @@
+<!doctype html>
+<!-- Admin Layout -->
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta charset="utf-8"/>
+	
+	<title>{{siteTitle}}{{^siteTitle}}Bongo Podcast Publisher - Admin{{/siteTitle}}</title>
+	
+	{{>styles}}
+	{{>scripts}}
+	
+	<script type="text/javascript">
+	$(function(){
+		$("body").bind("click", function (e) {
+		    $('.dropdown-toggle, .menu').parent("li").removeClass("open");
+		  });
+		
+		$(".dropdown-toggle, .menu").click(function (e) {
+		    var $li = $(this).parent("li").toggleClass('open');
+		    return false;
+		  });
+		
+		
+		$('.horizontal_nav a[href="'+location.pathname+'"]').parent('li').addClass('active');
+	});
+	</script>
+</head>
+<body lang="en">
+	
+<div class="container">
+	
+	<section class="header">
+		<div class="row">
+			<div class="span9 columns">
+				<h1 class="site_name">
+					<a href="/admin/manager">Bongo Publisher Admin</a>
+				</h1>
+			</div>
+			<div class="span7 columns">
+				<ul class="horizontal_nav">
+					<li><a href="/admin/manager">episode manager</a></li>
+					<li><a href="/admin/publish">publish</a></li>
+					<li class="dropdown">
+						<a href="/admin/account" class="dropdown-toggle" id="account">account</a>
+						<ul class="dropdown-menu">
+							<li><a href="/admin/account/">settings</a></li>
+							<li class="divider"></li>
+							<li><a href="/admin/signout">sign out</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	{{{yield}}}
+</div>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<section class="episode">
+	<div class="page-header">
+		<h2>
+			<a href="/episode/{{_id}}">{{title}}</a>
+			<small>{{#episode}}Episode #{{episode}} - {{/episode}}<span class="date">{{published}}</span></small>
+		</h2>
+	</div>
+	<div class="row">
+		<div class="span16 columns summary">
+			{{{summary_html}}}
+		</div>
+	</div>
+	<div class="row">
+		<div class="span4 columns player">
+			<div class="well">
+				<h4>Listen</h4>
+				<audio controls="controls">
+					{{#file}}<source src="/audio/{{file}}" type="{{type}}"/>{{/file}}
+					{{#remote_file}}<source src="{{remote_file}}"/>{{/remote_file}}
+				</audio>
+				<ul class="unstyled">
+					{{#length}}<li><strong>Runtime:</strong> {{length}}</li>{{/length}}
+					<li>
+						 
+						{{#file}}<strong>Download:</strong> <a href="/audio/{{file}}">MP3 {{#size}}({{size}} MB){{/size}}</a>{{/file}}
+						{{#remote_file}}<strong>Via:</strong> <a href="{{remote_file}}"> {{remote_file}}</a>{{/remote_file}}
+					</li>
+				</ul>
+			</div>
+			
+		</div>
+		{{#links}}
+		<section class="links">
+			<div class="span12 columns">
+				<h4>Episode Links</h4>
+			</div>
+			{{% IMPLICIT-ITERATOR %}}	
+			{{#links_html}}
+			<div class="span6 columns">
+				{{{.}}}
+			</div>
+			{{/links_html}}
+		</section>
+		{{/links}}
+		
+		
+	</div>
+</section>
