@@ -1,4 +1,4 @@
-<script src="/javascripts/prettydate.js" type="text/javascript" charset="utf-8"></script>
+<script src="/javascripts/jquery.tablesorter.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 $(function(){
 	$('.pubdate').each(function(i,e){
@@ -15,6 +15,8 @@ $(function(){
 		}
 		
 	});
+	
+	$("table.sort").tablesorter({ sortList: [[2,0]] });
 });
 
 pretty = function(date) {
@@ -41,15 +43,15 @@ pretty = function(date) {
 <form method="post" class="form-stacked" action="/admin/episode/delete">
 <div class="row">
 	<div class="span16 columns">
-		<table class="zebra-striped">
+		<table class="zebra-striped sort">
 			<thead>
 				<tr>
 					<th>&nbsp;</th>
 
-					<th class="episode-title">Title</th>
-					<th>Published</th>
-					<th>Status</th>
-					<th>Stats</th>
+					<th class="episode-title xyellow">Title</th>
+					<th class="header xblue">Published</th>
+					<th class="header xgreen">Status</th>
+					<th class="header">Stats</th>
 				</tr>
 			</thead>
 			<tbody>
