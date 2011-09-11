@@ -58,9 +58,9 @@ mongooseAuth.helpExpress app
 # Routes
 
 app.get '/', (req, res) ->
-	models.Episode.find({processed: true}).limit(5).sort('published', 'descending').execFind (err, docs) ->
+	models.Episode.find().limit(5).sort('published', 'descending').execFind (err, docs) ->
 		res.render 'list', locals: episodes: docs
-
+		
 app.get '/episode/:id', (req, res) ->
 	models.Episode.findById req.params.id, (err, doc) ->
 		res.render 'episode', locals: doc
@@ -143,7 +143,70 @@ app.post '/admin/publish', (req, res, next) ->
 			
 			req.flash 'success', "The episode \"#{episode.title}\" is processing."
 			res.redirect '/admin'
-	
+
+app.get '/admin/episode/:_id', (req, res) ->
+	models.Episode.findById req.params._id, (err, doc) ->
+		res.render 'admin/publish', layout: 'admin/layout', locals: _.extend(doc, method: 'put')
+		
+app.post '/admin/episode/:_id', (req, res, next) -> 
+	req.form.complete (err, fields, files) ->
+		if err
+			next(err)
+		else
+			models.Episode.findById req.params._id, (err, doc) ->
+				
+				episode = _.extend doc, fields
+				
+				episode.save()
+						
+				if fields.use_remote is 'yes'
+					episode.processed = false
+					episode.save()
+					
+					host = url.parse(fields.remote_file).hostname
+					episode.file = url.parse(fields.remote_file).pathname.split("/").pop()
+
+					client = http.createClient 80, host
+
+					request = client.request 'GET', fields.remote_file, host: host
+					request.end()
+
+					request.addListener 'response', (response) ->
+						downloadfile = fs.createWriteStream "./public/uploads/#{episode.file}", flags: 'a'
+						episode.size = response.headers['content-length']
+						episode.type = response.headers['content-type']
+
+						episode.save()
+
+						response.addListener 'data', (chunk) ->
+							downloadfile.write chunk, encoding='binary'	
+
+						response.addListener 'end', () ->
+							downloadfile.end()
+							console.log "Finished downloading #{episode.file}"
+							episode.processed = true
+							episode.save()
+
+
+				unless _.size(files) is 0
+					console.log "Uploaded #{files.audio.filename} to #{files.audio.path}"
+					fs.rename files.audio.path, "./public/uploads/#{files.audio.filename}"
+				
+				
+
+					console.log files.audio
+					episode.file = files.audio.filename
+					episode.size = files.audio.size
+					episode.type = files.audio.type
+					episode.processed = true
+					episode.save()
+
+				req.form.on 'progress', (bytesReceived, bytesExpected) ->
+					percent = (bytesReceived / bytesExpected) * 100 or 0
+					console.log "Uploading: #{percent}%"
+			
+				req.flash 'success', "The episode \"#{episode.title}\" is processing."
+				res.redirect '/admin'
 
 app.post '/admin/episode/delete', (req, res) ->
 	episodes = []
@@ -155,16 +218,12 @@ app.delete '/admin/episode/delete', (req, res) ->
 		req.flash 'info', "You're episodes have been removed."
 		res.redirect '/admin/manager'
 		
-		console.log req.body
 		_.each req.body.episode, (i, e) ->
-			console.log i
 			models.Episode.remove _id: i, (r,d) ->
 				console.log d
 		
 
-app.get '/admin/episode/:_id', (req, res) ->
-	models.Episode.findById req.params._id, (err, doc) ->
-		res.render 'admin/publish', layout: 'admin/layout', locals: _.extend(doc, method: 'put')
+
 	
 
 app.listen 3000
