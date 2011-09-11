@@ -5,6 +5,7 @@ mongooseAuth = require 'mongoose-auth'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
+
 EpisodeSchema = new Schema
 	title: 
 		type: String
@@ -12,6 +13,7 @@ EpisodeSchema = new Schema
 	episode: 
 		type: Number
 		index: true
+		
 	published: 
 		type: Date
 		default: Date.now()	# can be in the future, aka "Publish on Date"
@@ -20,15 +22,18 @@ EpisodeSchema = new Schema
 	length: Number
 	size: 
 		type: Number
-		get: (s) ->
+		get: (s=0) ->
 			(s/1048576).toFixed 2 # 1024^2 means MB
 	type: String			# mp3, mp4, m4v, etc.
-	remote_file: String		# url
 	summary: String			# Markdown text
 	links: String			# Markdown Text
 	release:
 		type: String
 		enum: ['published', 'queue', 'date', 'draft', 'offline']
+		index: true
+	processed: 
+		type: Boolean
+		default: false
 		index: true
 	meta:
 		views: Number

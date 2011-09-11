@@ -23,14 +23,14 @@ $ ->
 				<div class="clearfix">
 					<label for="title">Title</label>
 					<div class="input">
-						<input class="xxlarge" id="title" name="title" size="30" type="text" />
+						<input class="xxlarge" id="title" name="title" size="30" type="text" value="{{title}}"/>
 					</div>
 				</div><!-- /clearfix -->
 
 				<div class="clearfix">
 					<label for="summary">Summary</label>
 					<div class="input">
-						<textarea class="xxlarge" id="summary" name="summary" rows="5"></textarea>
+						<textarea class="xxlarge" id="summary" name="summary" rows="5">{{summary}}</textarea>
 						<span class="help-block">Markdown Syntax Supported</span>
 					</div>
 				</div><!-- /clearfix -->
@@ -38,7 +38,7 @@ $ ->
 				<div class="clearfix">
 					<label for="links">Links</label>
 					<div class="input">
-						<textarea class="xxlarge" id="links" name="links" rows="5"></textarea>
+						<textarea class="xxlarge" id="links" name="links" rows="5">{{links}}</textarea>
 						<span class="help-block">Markdown Syntax Supported</span>
 					</div>
 				</div><!-- /clearfix -->
@@ -47,35 +47,38 @@ $ ->
 		</div>
 		<div class="span5 columns">
 			
-			<fieldset>
+			<fieldset id="upload-new-file">
 				<legend>Media File</legend>
-				<p>Select a file to upload <strong>OR</strong> provide a URL to a previously uploaded file.</p>
-				
-				
-				
-				<div class="clearfix">
-					<label for="file">Upload File</label>
-					<div class="input-file">
-						<input class="large" id="file" name="audio" type="file" />
-					</div>
-				</div><!-- /clearfix -->
-
-
-				<div class="clearfix">
-					<label for="remote_file">File URL</label>
-					<div class="input">
-						<div class="input-prepend">
-							<label class="add-on">
-								<input type="checkbox" />
-							</label>
-							<input class="large" id="remote_file" name="remote_file" size="30" type="text" placeholder="http://example.com/audio.mp3"/>
-							
+				<div class="file-uploader">
+					<p>Select a {{#file}}<em>new</em> {{/file}}file to upload <strong>OR</strong> provide a URL to a previously uploaded file.</p>
+					{{#file}}<p>This will replace the original audio file.</p>{{/file}}
+					<div class="clearfix">
+						<label for="file">Upload File</label>
+						<div class="input-file">
+							<input class="large" id="file" name="audio" type="file" />
 						</div>
-					</div>
-				</div><!-- /clearfix -->
+					</div><!-- /clearfix -->
 
+
+					<div class="clearfix">
+						<label for="remote_file">File URL</label>
+						<div class="input">
+							<div class="input-prepend">
+								<label class="add-on">
+									<input type="checkbox" name="use_remote" value="yes"/>
+								</label>
+								<input class="large" id="remote_file" name="remote_file" size="30" type="text" placeholder="http://example.com/audio.mp3"/>
+								<span class="help-block">Check this field to download the remote file</span>
+							</div>
+						</div>
+					</div><!-- /clearfix -->
+				</div>
+				
 			</fieldset>
 			<hr />
+			{{>player}}
+			{{#file}}<hr />{{/file}}
+			
 			<fieldset>
 				<legend>Publication Options</legend>
 				
@@ -83,9 +86,11 @@ $ ->
 				<div class="clearfix">
 					<label for="release">Release</label>
 					<div class="input">
+						<input type="hidden" name="release-value" value="{{release}}">
 						<select name="release" class="large">
 							{{#method}}
 							<option value="published">published</option>
+							<option value="offline">offline</option>
 							{{/method}}
 							{{^method}}
 							<option value="published">publish now</option>

@@ -1,0 +1,23 @@
+<div class="row">
+	<div class="span8 columns offset4">
+		<form method="post">
+			<input type="hidden" name="_method" value="delete">
+			{{% IMPLICIT-ITERATOR %}}
+			{{#episodes}}
+				<input type="hidden" name="episode[{{.}}]" value="{{.}}" />
+			{{/episodes}}
+			<div class="alert-message block-message error">
+				<p>
+					<strong>Oh snap! Are you sure?</strong>
+					Deleting an episode is a <strong>permanent</strong> and cannot be undone
+				</p>
+				<div class="alert-actions">
+					<button type="submit" class="btn small">Yes, delete the episode(s)</button> 
+					<a class="btn small" href="/admin/manager">Oops, cancel this action</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+

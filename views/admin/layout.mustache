@@ -23,6 +23,12 @@
 		
 		
 		$('.horizontal_nav a[href="'+location.pathname+'"]').parent('li').addClass('active');
+		
+		$('.alert-message .close').click(function(e){
+			e.preventDefault();
+			$(this).parent('.alert-message').slideUp();
+		});
+	
 	});
 	</script>
 </head>
@@ -41,6 +47,7 @@
 				<ul class="horizontal_nav">
 					<li><a href="/admin/manager">episode manager</a></li>
 					<li><a href="/admin/publish">publish</a></li>
+					<li><a href="/admin/queue">queue</a></li>
 					<li class="dropdown">
 						<a href="/admin/account" class="dropdown-toggle" id="account">account</a>
 						<ul class="dropdown-menu">
@@ -53,6 +60,53 @@
 			</div>
 		</div>
 	</section>
+	
+	{{#flash}}
+	<section id="alerts">
+		<div class="row">
+			<div class="span12 columns offset2">
+				{{% IMPLICIT-ITERATOR %}}
+				{{#success}}
+				<div class="alert-message success">
+					<a href="#" class="close">x</a>
+					<p>
+						<strong>Well done!</strong>
+						{{.}}
+					</p>
+				</div>
+				{{/success}}
+				{{#info}}
+				<div class="alert-message info">
+					<a href="#" class="close">x</a>
+					<p>
+						<strong>Heads up!</strong>
+						{{.}}
+					</p>
+				</div>
+				{{/info}}
+				{{#warning}}
+				<div class="alert-message warning">
+					<a href="#" class="close">x</a>
+					<p>
+						<strong>Holy guacamole!</strong>
+						{{.}}
+					</p>
+				</div>
+				{{/warning}}
+				{{#error}}
+				<div class="alert-message error">
+					<a href="#" class="close">x</a>
+					<p>
+						<strong>Oh snap!</strong>
+						{{.}}
+					</p>
+				</div>
+				{{/error}}
+				
+			</div>
+		</div>
+	</section>
+	{{/flash}}
 	{{{yield}}}
 </div>
 
