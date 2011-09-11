@@ -15,15 +15,27 @@
 			<div class="well">
 				<h4>Listen</h4>
 				<audio controls="controls">
-					{{#file}}<source src="/audio/{{file}}" type="{{type}}"/>{{/file}}
-					{{#remote_file}}<source src="{{remote_file}}"/>{{/remote_file}}
+					<source src="/uploads/{{file}}" type="audio/mpeg" />
+					<!--[if gt IE 6]>
+					<object classid="clsid:6BF52A52-394A-11D3-B153-00C04F79FAA6" width="320" height="45"><!
+					[endif]--><!--[if !IE]><!-->
+					<object type="audio/mpeg" data="/uploads/{{file}}">
+					<!--<![endif]-->
+					<param name="url" value="/uploads/{{file}}" />
+					<param name="autostart" value="false" />
+					<param name="uiMode" value="full" />
+					<object height="24" width="320" type="application/x-shockwave-flash" data="/swf/player.swf" id="audioplayer">
+					<param name="movie" value="/swf/player.swf" />
+					<param name="FlashVars" value="playerID=audioplayer&amp;soundFile=/uploads/{{file}}.MP3" />
+					</object><!--[if gt IE 6]><!-->
+					</object><!--<![endif]-->
 				</audio>
+				
 				<ul class="unstyled">
 					{{#length}}<li><strong>Runtime:</strong> {{length}}</li>{{/length}}
 					<li>
 						 
 						{{#file}}<strong>Download:</strong> <a href="/uploads/{{file}}">MP3 {{#size}}({{size}} MB){{/size}}</a>{{/file}}
-						{{#remote_file}}<strong>Via:</strong> <a href="{{remote_file}}"> {{remote_file}}</a>{{/remote_file}}
 					</li>
 				</ul>
 			</div>

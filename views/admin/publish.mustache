@@ -76,8 +76,25 @@ $ ->
 				
 			</fieldset>
 			<hr />
-			{{>player}}
-			{{#file}}<hr />{{/file}}
+			{{#file}}
+			<audio controls="controls">
+				<source src="/uploads/{{file}}" type="audio/mpeg" />
+				<!--[if gt IE 6]>
+				<object classid="clsid:6BF52A52-394A-11D3-B153-00C04F79FAA6" width="320" height="45"><!
+				[endif]--><!--[if !IE]><!-->
+				<object type="audio/mpeg" data="/uploads/{{file}}">
+				<!--<![endif]-->
+				<param name="url" value="/uploads/{{file}}" />
+				<param name="autostart" value="false" />
+				<param name="uiMode" value="full" />
+				<object height="24" width="320" type="application/x-shockwave-flash" data="/swf/player.swf" id="audioplayer">
+				<param name="movie" value="__FLASH__.SWF" />
+				<param name="FlashVars" value="playerID=audioplayer&amp;soundFile=/uploads/{{file}}.MP3" />
+				</object><!--[if gt IE 6]><!-->
+				</object><!--<![endif]-->
+			</audio>
+			<hr />
+			{{/file}}
 			
 			<fieldset>
 				<legend>Publication Options</legend>
