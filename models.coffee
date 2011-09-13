@@ -85,7 +85,7 @@ UserSchema.plugin mongooseAuth,
 			registerView: 'register'
 			loginSuccessRedirect: '/admin'
 			registerSuccessRedirect: '/admin'
-
+	
 
 module.exports = models =
 	Episode:	mongoose.model 'Episode', EpisodeSchema

@@ -61,52 +61,7 @@
 		</div>
 	</section>
 	
-	{{#flash}}
-	<section id="alerts">
-		<div class="row">
-			<div class="span12 columns offset2">
-				{{% IMPLICIT-ITERATOR %}}
-				{{#success}}
-				<div class="alert-message success">
-					<a href="#" class="close">x</a>
-					<p>
-						<strong>Well done!</strong>
-						{{.}}
-					</p>
-				</div>
-				{{/success}}
-				{{#info}}
-				<div class="alert-message info">
-					<a href="#" class="close">x</a>
-					<p>
-						<strong>Heads up!</strong>
-						{{.}}
-					</p>
-				</div>
-				{{/info}}
-				{{#warning}}
-				<div class="alert-message warning">
-					<a href="#" class="close">x</a>
-					<p>
-						<strong>Holy guacamole!</strong>
-						{{.}}
-					</p>
-				</div>
-				{{/warning}}
-				{{#error}}
-				<div class="alert-message error">
-					<a href="#" class="close">x</a>
-					<p>
-						<strong>Oh snap!</strong>
-						{{.}}
-					</p>
-				</div>
-				{{/error}}
-				
-			</div>
-		</div>
-	</section>
-	{{/flash}}
+	{{>alerts}}
 	{{{yield}}}
 </div>
 

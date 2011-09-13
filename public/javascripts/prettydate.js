@@ -1,36 +1,35 @@
-/*
- * JavaScript Pretty Date
- * Copyright (c) 2008 John Resig (jquery.com)
- * Licensed under the MIT license.
- */
-
-// Takes an ISO time and returns a string representing how
-// long ago the date represents.
-function prettyDate(time){
-	var date = new Date((time || "").replace(/-/g,"/").replace(/[TZ]/g," ")),
-		diff = (((new Date()).getTime() - date.getTime()) / 1000),
-		day_diff = Math.floor(diff / 86400);
-			
+pretty = function(date) {
+	var diff = (((new Date()).getTime() - date.getTime()) / 1000),
+			day_diff = Math.floor(diff / 86400);
+	
+	if(diff < 0)
+		day_diff = Math.floor(-1*diff / 86400);
+	
 	if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 )
-		return;
-			
-	return day_diff == 0 && (
-			diff < 60 && "just now" ||
-			diff < 120 && "1 minute ago" ||
-			diff < 3600 && Math.floor( diff / 60 ) + " minutes ago" ||
-			diff < 7200 && "1 hour ago" ||
-			diff < 86400 && Math.floor( diff / 3600 ) + " hours ago") ||
-		day_diff == 1 && "Yesterday" ||
-		day_diff < 7 && day_diff + " days ago" ||
-		day_diff < 31 && Math.ceil( day_diff / 7 ) + " weeks ago";
-}
+			 date.getMonth()+'/'+date.getDay()+'/'+date.getFullYear();
 
-// If jQuery is included in the page, adds a jQuery plugin to handle it as well
-if ( typeof jQuery != "undefined" )
-	jQuery.fn.prettyDate = function(){
-		return this.each(function(){
-			var date = prettyDate(this.title);
-			if ( date )
-				jQuery(this).text( date );
-		});
-	};
+	return day_diff == 0 && (
+				diff < 0 && diff > -60 && "in moments" ||
+				diff > 0 && diff < 60 && "just now" ||
+				
+				diff < 0 && diff > -120 && "in 1 minute" ||
+				diff > 0 && diff < 120 && "1 minute ago" ||
+				
+				diff < 0 && diff > -3600 && "in " + Math.floor( diff*-1 / 60 ) + " minutes" ||
+				diff > 0 && diff < 3600 && Math.floor( diff / 60 ) + " minutes ago" ||
+				
+				diff < 0 && diff > -7200 && "in 1 hour" ||
+				diff > 0 && diff < 7200 && "1 hour ago" ||
+				
+				diff < 0 && diff > -86400 && "in " + Math.floor( diff*-1 / 3600 ) + " hours " ||
+				diff > 0 && diff < 86400 && Math.floor( diff / 3600 ) + " hours ago") ||
+				
+			diff > 0 && day_diff == 1 && "Yesterday" ||
+			diff < 0 && day_diff == 1 && "Tomorrow" ||
+			
+			diff > 0 && day_diff < 7 && day_diff + " days ago" ||
+			diff < 0 && day_diff < 7 && "in " + day_diff + " days" ||
+			
+			diff > 0 && day_diff < 31 && Math.ceil( day_diff / 7 ) + " weeks ago" ||
+			diff < 0 && day_diff < 31 && "in " + Math.ceil( day_diff / 7 ) + " weeks";
+}

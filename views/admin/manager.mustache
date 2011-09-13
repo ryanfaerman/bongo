@@ -1,11 +1,9 @@
 <script src="/javascripts/jquery.tablesorter.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 $(function(){
-	$('.pubdate').each(function(i,e){
-		date = new Date($(this).text());
-		$(this).text(pretty(date))
-		
-	});
+	$("table.sort").tablesorter({ sortList: [[2,0]] });
+	
+	
 	
 	$('input[type=checkbox]').change(function(){
 		if($('input[type=checkbox]:checked').length == 0) {
@@ -16,33 +14,24 @@ $(function(){
 		
 	});
 	
-	$("table.sort").tablesorter({ sortList: [[2,0]] });
+	
 });
 
-pretty = function(date) {
-	var diff = (((new Date()).getTime() - date.getTime()) / 1000),
-			day_diff = Math.floor(diff / 86400);
-	
-	if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 )
-			 date.getMonth()+'/'+date.getDay()+'/'+date.getFullYear();
-	
-	return day_diff == 0 && (
-				diff < 60 && "just now" ||
-				diff < 120 && "1 minute ago" ||
-				diff < 3600 && Math.floor( diff / 60 ) + " minutes ago" ||
-				diff < 7200 && "1 hour ago" ||
-				diff < 86400 && Math.floor( diff / 3600 ) + " hours ago") ||
-			day_diff == 1 && "Yesterday" ||
-			day_diff < 7 && day_diff + " days ago" ||
-			day_diff < 31 && Math.ceil( day_diff / 7 ) + " weeks ago";
-}
+
 </script>
 
+<div class="page-header">
+	<h2>
+		Episode Manager
+		<small>View all your episodes</small>
+	</h2>
+</div>
 
 {{#has_episodes}}
-<form method="post" class="form-stacked" action="/admin/episode/delete">
+<form method="post" class="form-stacked" action="/admin/delete/episode">
 <div class="row">
 	<div class="span16 columns">
+		
 		<table class="zebra-striped sort">
 			<thead>
 				<tr>
@@ -78,6 +67,27 @@ pretty = function(date) {
 	</div>
 </div>
 </form>
+
+<!--
+<div class="row">
+	<div class="span4 colums">
+		<div class="pagination">
+			<ul>
+				<li class="prev disabled">
+					<a>&larr; Previous</a>
+				</li>
+				<li class="active">
+					<a href="?page=1">1</a>
+				</li>
+				<li class="next">
+					<a>Next &rarr;</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+-->
+
 {{/has_episodes}}
 
 

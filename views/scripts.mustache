@@ -7,4 +7,20 @@
 <script src="/javascripts/less.min.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-<script src="/javascripts/jquery.slugit.js" type="text/javascript" charset="utf-8"></script>
+<script src="/javascripts/prettydate.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+$(function(){
+	$('.pubdate').each(function(i,e){
+		date = new Date($(this).text());
+		$(this).attr('pubdate', date);
+		$(this).text(pretty(date))
+		
+	});
+});
+
+setInterval(function(){
+	$('.pubdate').each(function(i,e){
+		$(this).text(pretty($(this).attr('pubdate')));
+	});
+}, 300000);
+</script>

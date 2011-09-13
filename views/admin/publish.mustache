@@ -10,8 +10,17 @@ $ ->
 		e.preventDefault()
 	
 	$('form').bind 'reset', -> history.back()
+	
+	$('select[name=release]').val $("input[name='release-value']").val();
 
 </script>
+
+<div class="page-header">
+	<h2>
+		Publish
+		<small>Create your episode</small>
+	</h2>
+</div>
 
 <div class="row">
 	<form method="post" class="form-stacked" enctype="multipart/form-data">
@@ -108,6 +117,8 @@ $ ->
 							{{#method}}
 							<option value="published">published</option>
 							<option value="offline">offline</option>
+							<option value="queue">in queue</option>
+							<option value="draft">saved as draft</option>
 							{{/method}}
 							{{^method}}
 							<option value="published">publish now</option>

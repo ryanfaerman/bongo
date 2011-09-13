@@ -2,7 +2,7 @@
 	<div class="page-header">
 		<h2>
 			<a href="/episode/{{_id}}">{{title}}</a>
-			<small>{{#episode}}Episode #{{episode}} - {{/episode}}<span class="date">{{published}}</span></small>
+			<small>{{#episode}}Episode #{{episode}} - {{/episode}}<span class="pubdate">{{published}}</span></small>
 		</h2>
 	</div>
 	<div class="row">
@@ -35,7 +35,7 @@
 					{{#length}}<li><strong>Runtime:</strong> {{length}}</li>{{/length}}
 					<li>
 						 
-						{{#file}}<strong>Download:</strong> <a href="/uploads/{{file}}">MP3 {{#size}}({{size}} MB){{/size}}</a>{{/file}}
+						{{#file}}<strong>Download:</strong> <a href="/uploads/{{file}}">MP3 ({{size}} MB)</a>{{/file}}
 					</li>
 				</ul>
 			</div>
