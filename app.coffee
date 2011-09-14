@@ -66,16 +66,19 @@ app.get '/', (req, res) ->
 		published: 
 			$lte: Date.now()
 	models.Episode.find(query).limit(5).sort('published', 'descending').execFind (err, docs) ->
-		res.render 'list', locals: episodes: docs
+		res.render 'list', locals: episodes: docs, site: config.site
 		
 app.get '/episode/:id', (req, res) ->
 	models.Episode.findById req.params.id, (err, doc) ->
-		res.render 'episode', locals: doc
+		res.render 'episode', locals: doc, site: config.site
 
-app.get '/episode/:id', (req, res) ->
-	models.Page.findById req.params.id, (err, doc) ->
-		res.render 'read', locals: doc
-
+app.get '/feed', (req, res) ->
+	query =
+		release: 'published'
+		published: 
+			$lte: Date.now()
+	models.Episode.find(query).limit(5).sort('published', 'descending').execFind (err, docs) ->
+		res.render 'rss', layout: null, locals: episodes: docs, site: config.site, feed: config.feed
 
 # Admin Routes
 
@@ -84,7 +87,6 @@ app.all '/admin*?', (req, res, next) ->
 		res.redirect '/'
 		req.flash 'info', 'Not logged in'
 	else
-		console.log 'trying next!'
 		next()
 
 app.get '/admin', (req, res) -> 
@@ -119,6 +121,10 @@ app.get '/admin/publish', (req, res) ->
 	res.render 'admin/publish', layout: 'admin/layout'
 
 app.post '/admin/publish', (req, res, next) -> 
+	req.form.on 'progress', (bytesReceived, bytesExpected) ->
+		percent = (bytesReceived / bytesExpected) * 100 or 0
+		console.log "Uploading: #{percent}%"
+	
 	req.form.complete (err, fields, files) ->
 		if err
 			next(err)
@@ -143,9 +149,10 @@ app.post '/admin/publish', (req, res, next) ->
 				request.end()
 
 				request.addListener 'response', (response) ->
-					downloadfile = fs.createWriteStream "./public/uploads/#{episode.file}", flags: 'a'
+					downloadfile = fs.createWriteStream "./public/uploads/#{episode.file}".replace(/\s+/g, '-'), flags: 'a'
 					episode.size = response.headers['content-length']
 					episode.type = response.headers['content-type']
+					episode.file = episode.file.replace(/\s+/g,'-')
 
 					episode.save()
 
@@ -160,21 +167,21 @@ app.post '/admin/publish', (req, res, next) ->
 
 
 			unless _.size(files) is 0
+				target = files.audio.filename.replace /\s+/g, '-'
 				console.log "Uploaded #{files.audio.filename} to #{files.audio.path}"
-				fs.rename files.audio.path, "./public/uploads/#{files.audio.filename}"
+				
+				fs.rename files.audio.path, "./public/uploads/#{target}"
 				
 				
 
 				console.log files.audio
-				episode.file = files.audio.filename
+				episode.file = files.audio.filename.replace(/\s+/g,'-')
 				episode.size = files.audio.size
 				episode.type = files.audio.type
 				episode.processed = true
 				episode.save()
 
-			req.form.on 'progress', (bytesReceived, bytesExpected) ->
-				percent = (bytesReceived / bytesExpected) * 100 or 0
-				console.log "Uploading: #{percent}%"
+
 			
 			req.flash 'success', "The episode \"#{episode.title}\" is processing."
 			res.redirect '/admin'
@@ -270,8 +277,6 @@ app.put '/admin/queue', (req, res) ->
 	queueSettings = req.body
 	queueSettings.status = if req.body.status is 'active' then 'active' else false
 	data = JSON.stringify queueSettings, null, 4
-	
-	console.log queueSettings
 	
 	fs.writeFile './queue_settings.js', "module.exports = #{data}"
 	

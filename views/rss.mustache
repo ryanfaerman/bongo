@@ -1,56 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss2enclosuresfull.xsl"?>
-<?xml-stylesheet type="text/css" media="screen" href="http://feeds.feedburner.com/~d/styles/itemcontent.css"?>
-<rss xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:admin="http://webns.net/mvcb/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/" xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" version="2.0">
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
 	<channel>
-		<title>Bongo Podcast Publisher</title>
-		<link>http://localhost:3000</link>
-		<pubDate>Thu, 08 Sep 2011 20:00:00 GMT</pubDate>
-		<description>{{summary}}</description>
+		{{#site}}
+		<title>{{name}}</title>
+		<link>{{url}}</link>
 		<language>en-us</language>
-		<itunes:new-feed-url>http://feeds.feedburner.com/bigwebshow</itunes:new-feed-url>
-		<itunes:subtitle>{{summary}}</itunes:subtitle>
-		<itunes:author>{{author}}</itunes:author>
-		<itunes:summary>{{summary}}</itunes:summary>
-		<itunes:image href="http://assets.5by5.tv/broadcasts/bigwebshow/cover_art/bigwebshow-itunes.jpg?1293793523"/>
-		<itunes:keywords>{{keywords}}</itunes:keywords>
-		<itunes:explicit>{{explicit}}</itunes:explicit>
+		<copyright>{{copyright}}</copyright>
+		<itunes:subtitle>{{about}}</itunes:subtitle>
+		<itunes:author>{{#owner}}{{name}}{{/owner}}</itunes:author>
+		<itunes:summary>{{about}}</itunes:summary>
+		<description>{{about}}</description>
 		<itunes:owner>
-			<itunes:name>{{owner}}</itunes:name>
+			{{#owner}}
+			<itunes:name>{{name}}</itunes:name>
 			<itunes:email>{{email}}</itunes:email>
+			{{/owner}}
 		</itunes:owner>
+		<itunes:image href="{{cover_art}}" />
+		{{/site}}
+		{{#feed}}
 		<itunes:category text="{{category}}">
-			<itunes:category text="{{subcategory}}"/>
+			{{#subcategory}}<itunes:category text="{{subcategory}}"/>{{/subcategory}}
 		</itunes:category>
-		<atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://feeds.feedburner.com/bigwebshow"/>
-		<feedburner:info uri="bigwebshow"/>
-		<atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/"/>
-		<media:thumbnail url="http://assets.5by5.tv/broadcasts/bigwebshow/cover_art/bigwebshow-itunes.jpg?1293793523"/>
-		<media:keywords>{{keywords}}</media:keywords>
-		<media:category scheme="http://www.itunes.com/dtds/podcast-1.0.dtd">{{category}}/{{subcategory}}</media:category>
-		<feedburner:emailServiceId>bigwebshow</feedburner:emailServiceId>
-		<feedburner:feedburnerHostname>http://feedburner.google.com</feedburner:feedburnerHostname>
-		<feedburner:browserFriendly/>
+		<itunes:explicit>{{explicit}}</itunes:explicit>
+		{{/feed}}
+		
+		{{#episodes}}
 		<item>
 			<title>{{title}}</title>
-			<link>{{link}}</link>
-			<guid>{{link}}</guid>
-			<pubDate>{{pubdate}}</pubDate>
-			<author>{{author}}</author>
-			<description>{{summary}}</description>
-			<enclosure type="audio/mpeg" length="22462080" url="http://audio.5by5.tv/broadcasts/bigwebshow/2011/bigwebshow-056.mp3"/>
-			<content:encoded>&lt;p&gt;Faruk Ates joins Jeffrey Zeldman and Dan Benjamin to discuss Modernizr, web and mobile design, Apple, and more.&lt;/p&gt;&lt;p&gt;Links for this episode:&lt;/p&gt;&lt;ul&gt;
-		&lt;li&gt;&lt;a href="http://farukat.es/" class="link" rel="nofollow"&gt;FarukAt.e?&lt;/a&gt;&lt;/li&gt;
-		&lt;li&gt;&lt;a href="http://www.modernizr.com/" class="link" rel="nofollow"&gt;Modernizr&lt;/a&gt;&lt;/li&gt;
-	&lt;/ul&gt;</content:encoded>
-			<itunes:author>Dan Benjamin &amp; Jeffrey Zeldman</itunes:author>
-			<itunes:duration>46:47</itunes:duration>
-			<itunes:subtitle/>
-			<itunes:summary>Faruk Ates joins Jeffrey Zeldman and Dan Benjamin to discuss Modernizr, web and mobile design, Apple, and more.</itunes:summary>
-			<itunes:keywords>web design, mobile apps, content design, ux, web standards, jeffrey zeldman</itunes:keywords>
-			<itunes:image href="http://assets.5by5.tv/broadcasts/bigwebshow/cover_art/bigwebshow-itunes.jpg"/>
-			<media:content url="http://audio.5by5.tv/broadcasts/bigwebshow/2011/bigwebshow-056.mp3" fileSize="22462080" type="audio/mpeg"/>
-			<itunes:explicit>no</itunes:explicit>
+			<description>{{summary_html}}</description>
+			<itunes:author>{{#site}}{{#owner}}{{name}}{{/owner}}{{/site}}</itunes:author>
+			<itunes:subtitle>A short primer on table spices</itunes:subtitle>
+			<itunes:summary>{{summary_html}}</itunes:summary>
+			<itunes:image href="{{#site}}{{cover_art}}{{/site}}"/>
+			<enclosure url="http://localhost:3000/uploads/{{file}}" length="{{size}}" type="{{type}}"/>
+			<guid>http://localhost:3000/episode/{{_id}}</guid>
+			<pubDate>{{published}}</pubDate>
+			<itunes:keywords>{{#feed}}{{keywords}}{{/feed}}</itunes:keywords>
 		</item>
+		{{/episodes}}
 	</channel>
 </rss>

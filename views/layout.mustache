@@ -3,8 +3,7 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<meta charset="utf-8"/>
-	
-	<title>{{siteTitle}}{{^siteTitle}}Bongo Podcast Publisher{{/siteTitle}}</title>
+	<title>{{#site}}{{name}}{{^name}}Bongo Podcast Publisher{{/name}}{{/site}}</title>
 	{{>styles}}
 	{{>scripts}}
 	
@@ -23,9 +22,9 @@
 			<div class="span6 columns">
 				<ul class="horizontal_nav">
 					<li class="active"><a id="home" href="/">home</a></li>
-					<li><a id="subscribe" href="#">subscribe</a></li>
-					<li><a id="about" href="#">about</a></li>
-					<li><a id="contact" href="#">contact</a></li>
+					<li><a id="subscribe" href="/feed">subscribe</a></li>
+					<li><a id="about" href="/about">about</a></li>
+					<li><a id="contact" href="/contact">contact</a></li>
 				</ul>
 			</div>
 		</div>
@@ -36,12 +35,10 @@
 	<section class="introduction">
 		<div class="row">
 			<div class="span6 columns">
-				<img src="/images/technics.jpeg" />
+				<img src="/images/technics.jpg" />
 			</div>
 			<div class="span9 columns">
-				<h2>Hello &amp; Welcome</h2>
-				<p>How do you know she is a witch? And this isn't my nose. This is a false one. …Are you suggesting that coconuts migrate? Listen. </p>
-				<p>Strange women lying in ponds distributing swords is no basis for a system of government. Supreme executive power derives from a mandate from the masses, not from some farcical aquatic ceremony. Well, what do you want? Camelot!</p>
+				{{#site}}{{{about}}}{{/site}}
 			</div>
 		</div>
 	</section>

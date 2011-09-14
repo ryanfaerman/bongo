@@ -22,8 +22,6 @@ EpisodeSchema = new Schema
 	length: Number
 	size: 
 		type: Number
-		get: (s=0) ->
-			(s/1048576).toFixed 2 # 1024^2 means MB
 	type: String			# mp3, mp4, m4v, etc.
 	summary: String			# Markdown text
 	links: String			# Markdown Text
@@ -43,6 +41,9 @@ EpisodeSchema = new Schema
 # Convert Markdown Text to HTML
 EpisodeSchema.virtual('summary_html').get ->
 	require('markdown').parse this.summary
+	
+EpisodeSchema.virtual('size_mb').get ->
+	(this.size/1048576).toFixed 2
 
 EpisodeSchema.virtual('links_html').get ->
 	lines = _.compact this.links.split '\r\n'		

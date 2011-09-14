@@ -26,7 +26,7 @@
 					<param name="uiMode" value="full" />
 					<object height="24" width="320" type="application/x-shockwave-flash" data="/swf/player.swf" id="audioplayer">
 					<param name="movie" value="/swf/player.swf" />
-					<param name="FlashVars" value="playerID=audioplayer&amp;soundFile=/uploads/{{file}}.MP3" />
+					<param name="FlashVars" value="playerID=audioplayer&amp;soundFile=/uploads/{{file}}" />
 					</object><!--[if gt IE 6]><!-->
 					</object><!--<![endif]-->
 				</audio>
@@ -35,7 +35,7 @@
 					{{#length}}<li><strong>Runtime:</strong> {{length}}</li>{{/length}}
 					<li>
 						 
-						{{#file}}<strong>Download:</strong> <a href="/uploads/{{file}}">MP3 ({{size}} MB)</a>{{/file}}
+						{{#file}}<strong>Download:</strong> <a href="/uploads/{{file}}">MP3 ({{size_mb}} MB)</a>{{/file}}
 					</li>
 				</ul>
 			</div>
