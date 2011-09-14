@@ -6,7 +6,8 @@ module.exports = {
         "thursday": "on"
     },
     "time": {
-        "morning": "on"
+        "morning": "on",
+        "afternoon": "on"
     },
     "recurrence": {
         "weekly": "on"
