@@ -1,7 +1,27 @@
-
-
-<form method="post">
-	login: <input type="text" name='email'/><br />
-	passw: <input type="password" name='password'/><br />
-	<input type="submit" value="login" />
-</form>
+<div class="row">
+	<form method="post" class="form-stacked">
+	<div class="span6 columns offset4">
+		<fieldset>
+			<legend>Sign in to the Publisher</legend>
+			<div class="clearfix">
+				<label for="title">Email</label>
+				<div class="input">
+					<input class="xlarge" id="title" name="email" size="30" type="text" value="{{email}}"/>
+				</div>
+			</div><!-- /clearfix -->
+			
+			<div class="clearfix">
+				<label for="title">Password</label>
+				<div class="input">
+					<input class="xlarge" id="title" name="password" size="30" type="password" />
+				</div>
+			</div><!-- /clearfix -->
+			
+		</fieldset>
+		
+		<div class="actions">
+			<button type="submit" class="btn primary">Access the Publisher</button>
+		</div>
+	</div>
+	</form>
+</div>

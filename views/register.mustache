@@ -1,6 +1,41 @@
-password<Br />
-<form method="post">
-	login: <input type="text" name='email'/><br />
-	passw: <input type="password" name='password'/><br />
-	<input type="submit" value="register" />
-</form>
+{{#site}}{{#open_registration}}
+
+<div class="row">
+	<form method="post" class="form-stacked">
+	<div class="span6 columns offset4">
+		<fieldset>
+			<legend>Register for the Publisher</legend>
+			<div class="clearfix">
+				<label for="title">Email</label>
+				<div class="input">
+					<input class="xlarge" id="title" name="email" size="30" type="text"/>
+				</div>
+			</div><!-- /clearfix -->
+			
+			<div class="clearfix">
+				<label for="title">Password</label>
+				<div class="input">
+					<input class="xlarge" id="title" name="password" size="30" type="password" />
+				</div>
+			</div><!-- /clearfix -->
+			
+		</fieldset>
+		
+		<div class="actions">
+			<button type="submit" class="btn primary">Access the Publisher</button>
+		</div>
+	</div>
+	</form>
+</div>
+
+
+{{/open_registration}}
+{{^open_registration}}
+<div class="alert-message error">
+	<p>
+		<strong>Oh snap!</strong>
+		Registration is closed.
+	</p>
+</div>
+{{/open_registration}}
+{{/site}}

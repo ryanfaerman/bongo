@@ -20,7 +20,6 @@ User = models.User
 
 cronTask = require './cron'
 
-
 app = module.exports = express.createServer(
 	form keepExtensions: true 	
 )
@@ -55,6 +54,14 @@ app.configure 'production', ->
 # mongoose-auth dynamic view helpers
 mongooseAuth.helpExpress app
 
+app.dynamicHelpers 
+	flash: (req, res) ->
+	  req.flash()
+	site: (req, res) ->
+		config.site
+	feed: (req, res) ->
+		config.feed
+	
 
 
 
@@ -66,11 +73,11 @@ app.get '/', (req, res) ->
 		published: 
 			$lte: Date.now()
 	models.Episode.find(query).limit(5).sort('published', 'descending').execFind (err, docs) ->
-		res.render 'list', locals: episodes: docs, site: config.site
+		res.render 'list', locals: episodes: docs
 		
 app.get '/episode/:id', (req, res) ->
 	models.Episode.findById req.params.id, (err, doc) ->
-		res.render 'episode', locals: doc, site: config.site
+		res.render 'episode', locals: doc
 
 app.get '/feed', (req, res) ->
 	query =
@@ -78,42 +85,31 @@ app.get '/feed', (req, res) ->
 		published: 
 			$lte: Date.now()
 	models.Episode.find(query).limit(5).sort('published', 'descending').execFind (err, docs) ->
-		res.render 'rss', layout: null, locals: episodes: docs, site: config.site, feed: config.feed
+		res.render 'rss', layout: null, locals: episodes: docs
 
 # Admin Routes
 
 app.all '/admin*?', (req, res, next) ->
 	unless req.loggedIn 
 		res.redirect '/'
-		req.flash 'info', 'Not logged in'
+		req.flash 'warning', "You're not signed in."
 	else
 		next()
 
 app.get '/admin', (req, res) -> 
 	res.redirect '/admin/manager'
+
+app.get '/admin/signout', (req, res) ->
+	req.logout()
+	req.flash 'warning', "You've been signed out"
+	res.redirect '/login'
 	
 app.get '/admin/manager', (req, res) ->
-	
-	per_page = req.query.limit or 25
-	page = req.query.page or 1
-	
 	models.Episode.count {}, (err, count) ->
-		max_pages = Math.ceil count/per_page
-		page = if (page-1) * per_page > max_pages then max_pages
-		# .skip((page-1) * per_page).limit(per_page)
 		models.Episode.find().sort('published', 'descending').execFind (err, docs) ->
 			locals = 
 				episodes: docs
-				flash: req.flash()
 				has_episodes: docs.length
-				current_page: page
-				per_page: per_page
-				episode_count: count
-				show_pagination: max_pages > 1
-				page_count: max_pages
-				first_page: if page is 1 then yes else no
-				last_page: if page is max_pages then yes else no
-				pages: _.range(max_pages)
 			
 			res.render 'admin/manager', layout: 'admin/layout', locals: locals
 
@@ -245,7 +241,6 @@ app.post '/admin/episode/:id', (req, res, next) ->
 
 
 app.post '/admin/delete/episode', (req, res) ->
-	console.log 'yoyoyo'
 	episodes = []
 	console.log req.body
 	_.each req.body.episode, (i,e) ->
@@ -253,23 +248,20 @@ app.post '/admin/delete/episode', (req, res) ->
 	res.render 'admin/confirm_delete', layout: 'admin/layout', locals: episodes: episodes
 
 app.delete '/admin/delete/episode', (req, res) ->
-		req.flash 'info', "You're episodes have been removed."
-		res.redirect '/admin/manager'
+	req.flash 'info', "You're episodes have been removed."
+	res.redirect '/admin/manager'
 
-		_.each req.body.episode, (i, e) ->
-			models.Episode.remove _id: i, (r,d) ->
-				console.log d
+	_.each req.body.episode, (i, e) ->
+		models.Episode.remove _id: i, (r,d) ->
+			console.log d
 
 app.get '/admin/queue', (req, res) ->
-	
 	models.Episode.find({release: 'queue'}).sort('published', 'ascending').execFind (err, docs) ->
 		locals = 
 			next_up: if docs.length > 0 then docs[0]
 			episodes: if docs.length > 1 then _.rest(docs)
-			flash: req.flash()
 			has_episodes: docs.length
 			settings: queueSettings
-		
 		
 		res.render 'admin/queue', layout: 'admin/layout', locals: locals
 
@@ -280,12 +272,12 @@ app.put '/admin/queue', (req, res) ->
 	
 	fs.writeFile './queue_settings.js', "module.exports = #{data}"
 	
-	
 	req.flash 'success', "Your queue settings were saved"
 	res.redirect 'back'
 	
 	
-	
+app.get '/admin/account', (req, res) ->
+	res.render 'admin/account', layout: 'admin/layout'	
 	
 
 app.listen 3000

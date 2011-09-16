@@ -61,14 +61,7 @@ EpisodeSchema.virtual('links_html').get ->
 
 
 
-UserSchema = new Schema
-	name: String
-	created:
-		type: Date
-		default: Date.now()
-	email:
-		type: String
-		unique: true
+UserSchema = new Schema()
 
 UserSchema.plugin mongooseAuth,
 	everymodule:

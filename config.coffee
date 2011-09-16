@@ -3,6 +3,7 @@ module.exports =
 		host: 'localhost'
 		db: 'bongo'
 	site:
+		open_registration: yes
 		name: "Bongo Podcast Publisher"
 		url: "http://localhost:3000"
 		copyright: ''
@@ -22,7 +23,7 @@ module.exports =
 			'''
 		cover_art: "http://localhost:3000/images/technics.jpg"
 		analytics:
-			google: 'U-2344-3'	
+			google: 'U-2344-3'
 	feed:
 		explicit: no
 		keywords: ['hello', 'bar']

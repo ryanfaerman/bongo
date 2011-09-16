@@ -1,13 +1,10 @@
 module.exports = {
-    "status": "active",
+    "status": false,
     "day": {
-        "tuesday": "on",
-        "wednesday": "on",
-        "thursday": "on"
+        "tuesday": "on"
     },
     "time": {
-        "morning": "on",
-        "afternoon": "on"
+        "morning": "on"
     },
     "recurrence": {
         "weekly": "on"

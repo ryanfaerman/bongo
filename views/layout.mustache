@@ -32,16 +32,19 @@
 	
 	{{>alerts}}
 	
+	{{#site}}
 	<section class="introduction">
 		<div class="row">
 			<div class="span6 columns">
 				<img src="/images/technics.jpg" />
 			</div>
 			<div class="span9 columns">
-				{{#site}}{{{about}}}{{/site}}
+				{{{about}}}
 			</div>
 		</div>
 	</section>
+	{{/site}}
+	
 	{{{yield}}}
 </div>
 

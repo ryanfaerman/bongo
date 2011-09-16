@@ -6,7 +6,7 @@
 <script src="/javascripts/coffee-script.js" type="text/javascript" charset="utf-8"></script>
 <script src="/javascripts/less.min.js" type="text/javascript" charset="utf-8"></script>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript" src="/javascripts/jquery.min.js"></script>
 <script src="/javascripts/prettydate.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 $(function(){
@@ -15,6 +15,11 @@ $(function(){
 		$(this).attr('pubdate', date);
 		$(this).text(pretty(date))
 		
+	});
+	
+	$('.alert-message .close').click(function(e){
+		e.preventDefault();
+		$(this).parent('.alert-message').slideUp();
 	});
 });
 
