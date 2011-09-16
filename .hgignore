@@ -9,4 +9,4 @@ syntax: glob
 .DS_Store
 ._*
 public/uploads/*
-node_modules
+node_modules/*

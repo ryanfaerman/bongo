@@ -1,0 +1,45 @@
+<form method="post">
+	<input type="hidden" name="_method" value="put">
+	<div class="page-header">
+		<h2>
+			Account Settings
+			<small>How do you do?</small>
+		</h2>
+	</div>
+	<div class="row">
+		<div class="span4 columns">
+			<h3>Login Information</h3>
+			<p>Adjust how you log into the publisher.</p>
+		</div>
+	
+		<div class="span12 columns">
+			<div class="clearfix">
+				<label for="email">Email Address</label>
+				<div class="input">
+					<input class="xxlarge" id="email" name="email" size="30" type="text" value="{{email}}"/>
+				</div>
+			</div><!-- /clearfix -->
+			
+			<div class="clearfix">
+				<label for="password">New Password</label>
+				<div class="input">
+					<input class="xxlarge" id="password" name="password" size="30" type="password"/>
+				</div>
+			</div><!-- /clearfix -->
+			
+			<div class="clearfix">
+				<label for="password_confirm">Confirm Password</label>
+				<div class="input">
+					<input class="xxlarge" id="password_confirm" name="password_confirm" size="30" type="password"/>
+					<span class="help-block">Because typos suck!</span>
+				</div>
+			</div><!-- /clearfix -->
+
+			
+			<div class="actions">
+				<button type="submit" class="btn primary">Save Account Changes</button>
+				<button type="reset" class="btn">Cancel</button>
+			</div>			
+		</div>
+	</div>
+</form>
