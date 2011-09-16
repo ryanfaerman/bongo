@@ -4,6 +4,11 @@
 	"version": "0.0.1",
 	"author": "Ryan Faerman <ryan@notsooriginal.com>",
 	"private": true,
+	"homepage": "https://bitbucket.org/ryanfaerman/bongo",
+	"repository": {
+		"type": "hg",
+		"url": "hg clone https://bitbucket.org/ryanfaerman/bongo"
+	},
 	"dependencies": {
 		"coffee-script": "1.1.2",
 		"express": "2.4.3",
@@ -17,5 +22,5 @@
 		"stache": "0.1.0",
 		"underscore": ">= 1.1.7"
 	},
-	"engines": { "node": "0.4.x" }
+	"engines": { "node": "0.4.10" }
 }
