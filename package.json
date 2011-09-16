@@ -3,14 +3,13 @@
 	"description": "A simple podcast publisher",
 	"version": "0.0.1",
 	"author": "Ryan Faerman <ryan@notsooriginal.com>",
-	"private": true,
+	"private": false,
 	"homepage": "https://bitbucket.org/ryanfaerman/bongo",
 	"repository": {
 		"type": "hg",
 		"url": "hg clone https://bitbucket.org/ryanfaerman/bongo"
 	},
 	"dependencies": {
-		"coffee-script": "1.1.2",
 		"express": "2.4.3",
 		"connect-form": "0.2.1",
 		"connect-mongo": "0.1.5",
@@ -22,5 +21,8 @@
 		"stache": "0.1.0",
 		"underscore": ">= 1.1.7"
 	},
+	"devDependencies": {
+	    "coffee-script": "1.1.2"
+	  },
 	"engines": { "node": "0.4.10" }
 }
