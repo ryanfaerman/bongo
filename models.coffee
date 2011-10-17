@@ -5,7 +5,6 @@ mongooseAuth = require 'mongoose-auth'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
-
 EpisodeSchema = new Schema
 	title: 
 		type: String
@@ -61,7 +60,11 @@ EpisodeSchema.virtual('links_html').get ->
 
 
 
-UserSchema = new Schema()
+UserSchema = new Schema
+	email: 
+		type: String
+		unique: yes
+	hash: String
 
 UserSchema.plugin mongooseAuth,
 	everymodule:
@@ -79,8 +82,31 @@ UserSchema.plugin mongooseAuth,
 			registerView: 'register'
 			loginSuccessRedirect: '/admin'
 			registerSuccessRedirect: '/admin'
-	
+
+
+PageSchema = new Schema
+	title: String
+	published: 
+		type: Date
+		default: Date.now()
+	release:
+		type: String
+		enum: ['published', 'queue', 'date', 'draft', 'offline']
+		index: true
+	url:
+		type: String
+		index: true
+	content: String
+
+ConfigSchema = new Schema
+	name: 
+		type: String
+		unique: true
+	setting: Schema.Types.Mixed
+
 
 module.exports = models =
 	Episode:	mongoose.model 'Episode', EpisodeSchema
 	User:		mongoose.model 'User', UserSchema
+	Page:		mongoose.model 'Page', PageSchema
+	Config:		mongoose.model 'Config', ConfigSchema

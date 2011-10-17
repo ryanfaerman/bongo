@@ -1,0 +1,97 @@
+<script src="/javascripts/jquery.tablesorter.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+$(function(){
+	$("table.sort").tablesorter({ sortList: [[2,0]] });
+	
+	
+	
+	$('input[type=checkbox]').change(function(){
+		if($('input[type=checkbox]:checked').length == 0) {
+			$('#delete-episodes').attr('disabled', 'disabled');
+		} else {
+			$('#delete-episodes').removeAttr('disabled');
+		}
+		
+	});
+	
+	
+});
+
+</script>
+
+<div class="page-header">
+	<h2>
+		Episode Manager
+		<small>View all your episodes</small>
+	</h2>
+</div>
+
+{{#has_episodes}}
+<form method="post" class="form-stacked" action="/admin/delete/episode">
+<div class="row">
+	<div class="span16 columns">
+		
+		<table class="zebra-striped sort">
+			<thead>
+				<tr>
+					<th>&nbsp;</th>
+
+					<th class="episode-title xyellow">Title</th>
+					<th class="header xblue">Published</th>
+					<th class="header xgreen">Status</th>
+					<th class="header">Stats</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#episodes}}
+				<tr>
+					<td><input type="checkbox" name="episode[{{_id}}]" value="{{_id}}"/></td>
+
+					<td class="episode-title"><a href="/admin/episode/{{_id}}">{{title}}</a> {{^processed}}<em>(processing)</em>{{/processed}}</td>
+					<td class="pubdate">{{published}}</td>
+					<td>{{release}}</td>
+
+					<td>{{#meta}}
+						{{views}}{{^views}}0 {{/views}}
+						 - {{plays}}{{^plays}}0 {{/plays}}
+						 - {{downloads}}{{^downloads}}0 {{/downloads}}
+					{{/meta}}</td>
+
+				</tr>
+				{{/episodes}}
+			</tbody>
+		</table>
+		<button id="delete-episodes" type="submit" class="btn danger" disabled>Delete Selected</button>
+		<a class="btn small" href="/admin/publish">Publish a New Episode</a>
+	</div>
+</div>
+</form>
+
+<!--
+<div class="row">
+	<div class="span4 colums">
+		<div class="pagination">
+			<ul>
+				<li class="prev disabled">
+					<a>&larr; Previous</a>
+				</li>
+				<li class="active">
+					<a href="?page=1">1</a>
+				</li>
+				<li class="next">
+					<a>Next &rarr;</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+-->
+
+{{/has_episodes}}
+
+
+
+{{^episodes}}
+<h1>Nothing Published</h1>
+<p>Maybe try <a href="/admin/publish">publishing</a> something?</p>
+{{/episodes}}

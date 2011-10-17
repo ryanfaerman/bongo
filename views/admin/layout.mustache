@@ -9,23 +9,6 @@
 	
 	{{>styles}}
 	{{>scripts}}
-	
-	<script type="text/javascript">
-	$(function(){
-		$("body").bind("click", function (e) {
-		    $('.dropdown-toggle, .menu').parent("li").removeClass("open");
-		  });
-		
-		$(".dropdown-toggle, .menu").click(function (e) {
-		    var $li = $(this).parent("li").toggleClass('open');
-		    return false;
-		  });
-		
-		
-		$('.horizontal_nav a[href="'+location.pathname+'"]').parent('li').addClass('active');
-	
-	});
-	</script>
 </head>
 <body lang="en">
 	
@@ -33,16 +16,17 @@
 	
 	<section class="header">
 		<div class="row">
-			<div class="span9 columns">
+			<div class="span8 columns">
 				<h1 class="site_name">
 					<a href="/admin/manager">Bongo Publisher Admin</a>
 				</h1>
 			</div>
-			<div class="span7 columns">
+			<div class="span8 columns">
 				<ul class="horizontal_nav">
 					<li><a href="/admin/manager">episode manager</a></li>
 					<li><a href="/admin/publish">publish</a></li>
 					<li><a href="/admin/queue">queue</a></li>
+					<li><a href="/admin/pages">pages</a></li>
 					<li class="dropdown">
 						<a href="/admin/account" class="dropdown-toggle" id="account">account</a>
 						<ul class="dropdown-menu">

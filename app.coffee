@@ -10,6 +10,7 @@ http = require 'http'
 url = require 'url'
 path = require 'path'
 events = require 'events'
+bcrypt = require 'bcrypt'
 
 models = require './models'
 config = require './config'
@@ -27,8 +28,6 @@ app = module.exports = express.createServer(
 # Configuration
 
 app.configure ->
-	
-	
 	app.set 'views', "#{__dirname}/views"
 	app.set 'view engine', 'mustache'
 	app.register '.mustache', require 'stache'
@@ -63,7 +62,11 @@ app.dynamicHelpers
 		config.feed
 	
 
+#c = require './crypt'
+#c.express app
 
+#d = require('./controllers/auth')(app)
+#console.log d
 
 # Routes
 
@@ -86,6 +89,13 @@ app.get '/feed', (req, res) ->
 			$lte: Date.now()
 	models.Episode.find(query).limit(5).sort('published', 'descending').execFind (err, docs) ->
 		res.render 'rss', layout: null, locals: episodes: docs
+
+app.get '/about', (req, res) ->
+	res.render 'about'
+
+app.get '/contact', (req, res) ->
+	res.render 'contact'
+
 
 # Admin Routes
 
@@ -278,7 +288,20 @@ app.put '/admin/queue', (req, res) ->
 	
 app.get '/admin/account', (req, res) ->
 	res.render 'admin/account', layout: 'admin/layout'	
-	
+
+app.get '/admin/pages', (req, res) ->
+	res.render 'admin/pages', layout: 'admin/layout'
+
+
+app.get '/register', (req, res) ->
+	res.redirect '/'
+
+
+
+# Digustingly Generic Routes
+
+app.get '/:url', (req, res) ->
+	console.log req.params.url	
 
 app.listen 3000
 console.log "Express server listening on port #{app.address().port} in #{app.settings.env} mode"
