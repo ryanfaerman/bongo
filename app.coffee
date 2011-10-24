@@ -17,7 +17,7 @@ config = require './config'
 queueSettings = require './queue_settings'
 
 mongoose.connect "mongodb://#{config.db.host}/#{config.db.db}"
-User = models.User
+#User = models.User
 
 cronTask = require './cron'
 
@@ -40,7 +40,7 @@ app.configure ->
 	app.use express.session 
 		secret: 'bingobongo'
 		store: new MongoStore(db: config.db.db, host: config.db.host)
-	app.use mongooseAuth.middleware()
+	#app.use mongooseAuth.middleware()
 	
 
 app.configure 'development', ->
@@ -51,7 +51,7 @@ app.configure 'production', ->
 
 
 # mongoose-auth dynamic view helpers
-mongooseAuth.helpExpress app
+# mongooseAuth.helpExpress app
 
 app.dynamicHelpers 
 	flash: (req, res) ->
@@ -65,11 +65,12 @@ app.dynamicHelpers
 #c = require './crypt'
 #c.express app
 
-#d = require('./controllers/auth')(app)
-#console.log d
+require('./controllers/auth')(app)
+require('./controllers/episode')(app)
 
 # Routes
 
+###
 app.get '/', (req, res) ->
 	query =
 		release: 'published'
@@ -89,7 +90,7 @@ app.get '/feed', (req, res) ->
 			$lte: Date.now()
 	models.Episode.find(query).limit(5).sort('published', 'descending').execFind (err, docs) ->
 		res.render 'rss', layout: null, locals: episodes: docs
-
+###
 app.get '/about', (req, res) ->
 	res.render 'about'
 
@@ -99,13 +100,16 @@ app.get '/contact', (req, res) ->
 
 # Admin Routes
 
+###
 app.all '/admin*?', (req, res, next) ->
 	unless req.loggedIn 
 		res.redirect '/'
 		req.flash 'warning', "You're not signed in."
 	else
 		next()
+###
 
+###
 app.get '/admin', (req, res) -> 
 	res.redirect '/admin/manager'
 
@@ -264,7 +268,7 @@ app.delete '/admin/delete/episode', (req, res) ->
 	_.each req.body.episode, (i, e) ->
 		models.Episode.remove _id: i, (r,d) ->
 			console.log d
-
+###
 app.get '/admin/queue', (req, res) ->
 	models.Episode.find({release: 'queue'}).sort('published', 'ascending').execFind (err, docs) ->
 		locals = 
@@ -292,9 +296,6 @@ app.get '/admin/account', (req, res) ->
 app.get '/admin/pages', (req, res) ->
 	res.render 'admin/pages', layout: 'admin/layout'
 
-
-app.get '/register', (req, res) ->
-	res.redirect '/'
 
 
 

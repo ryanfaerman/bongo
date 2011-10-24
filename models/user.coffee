@@ -13,5 +13,10 @@ UserSchema = new Schema
 		unique: true
 	name: String
 	hash: String
+	salt: String
+
+UserSchema.path('email').validate (v) ->
+	return true
+, 'invalid email'
 
 module.exports = mongoose.model 'User', UserSchema

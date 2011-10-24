@@ -59,7 +59,7 @@ EpisodeSchema.virtual('links_html').get ->
 	return cols
 
 
-
+###
 UserSchema = new Schema
 	email: 
 		type: String
@@ -74,16 +74,16 @@ UserSchema.plugin mongooseAuth,
 	password:
 		loginWith: 'email'
 		everyauth:
-			getLoginPath: '/login'
-			postLoginPath: '/login'
+			getLoginPath: '/login_auth'
+			postLoginPath: '/login_auth'
 			loginView: 'login'
-			getRegisterPath: '/register'
-			postRegisterPath: '/register'
+			getRegisterPath: '/register_auth'
+			postRegisterPath: '/register_auth'
 			registerView: 'register'
 			loginSuccessRedirect: '/admin'
 			registerSuccessRedirect: '/admin'
 
-
+###
 PageSchema = new Schema
 	title: String
 	published: 
@@ -107,6 +107,6 @@ ConfigSchema = new Schema
 
 module.exports = models =
 	Episode:	mongoose.model 'Episode', EpisodeSchema
-	User:		mongoose.model 'User', UserSchema
+	#User:		mongoose.model 'User', UserSchema
 	Page:		mongoose.model 'Page', PageSchema
 	Config:		mongoose.model 'Config', ConfigSchema
