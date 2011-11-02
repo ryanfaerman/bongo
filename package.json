@@ -18,7 +18,6 @@
 		"markdown": "0.2.1",
 		"mongodb": "0.9.6-13",
 		"mongoose": "2.0.2",
-		"mongoose-auth": "0.0.11",
 		"stache": "0.1.0",
 		"underscore": ">= 1.1.7"
 	},
