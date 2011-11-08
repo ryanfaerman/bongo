@@ -10,3 +10,4 @@ syntax: glob
 ._*
 public/uploads/*
 node_modules/*
+*.sublime-*
