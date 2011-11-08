@@ -11,13 +11,13 @@ url = require 'url'
 path = require 'path'
 events = require 'events'
 
-models = require './models'
+#models = require './models'
 config = require './config'
 queueSettings = require './queue_settings'
 
 mongoose.connect "mongodb://#{config.db.host}/#{config.db.db}"
 
-cronTask = require './cron'
+#cronTask = require './cron'
 
 app = module.exports = express.createServer(
 	form keepExtensions: true 	
@@ -31,7 +31,6 @@ app.configure ->
 	app.register '.mustache', require 'stache'
 	app.use express.bodyParser()
 	app.use express.methodOverride()
-	#app.use app.router
 	app.use express.static "#{__dirname}/public"
 	
 	app.use express.cookieParser()
@@ -50,23 +49,26 @@ app.dynamicHelpers
 	flash: (req, res) ->
 	  req.flash()
 	site: (req, res) ->
-		config.site
+		app.set('config').site
 	feed: (req, res) ->
-		config.feed
+		app.set('config').feed
 
 
+require('./controllers/settings')(app)	# System Settings
 require('./controllers/auth')(app)		# Auth Routes
 require('./controllers/episode')(app)	# Episode Routes
 
 # Routes
 app.get '/about', (req, res) ->
 	res.render 'about'
+	console.log app.set 'config'
 
 app.get '/contact', (req, res) ->
 	res.render 'contact'
 
 
 # Admin Routes
+###
 app.get '/admin/queue', (req, res) ->
 	models.Episode.find({release: 'queue'}).sort('published', 'ascending').execFind (err, docs) ->
 		locals = 
@@ -87,7 +89,7 @@ app.put '/admin/queue', (req, res) ->
 	req.flash 'success', "Your queue settings were saved"
 	res.redirect 'back'
 	
-	
+###
 app.get '/admin/account', (req, res) ->
 	res.render 'admin/account', layout: 'admin/layout'	
 

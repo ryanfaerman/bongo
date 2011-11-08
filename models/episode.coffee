@@ -1,4 +1,6 @@
 mongoose = require 'mongoose'
+_ = require 'underscore'
+
 
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId

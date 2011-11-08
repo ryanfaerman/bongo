@@ -12,7 +12,11 @@ module.exports = (app) ->
 
 	# register
 	app.get '/register', (req, res) ->
-		res.render 'register'
+		unless app.set('config').site.open_registration
+			req.flash 'info', 'Registration is disabled. If you have an account, log in.'
+			res.redirect '/login'
+		else
+			res.render 'register'
 	
 	app.post '/register', (req, res) ->
 		console.log req.body
