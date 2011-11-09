@@ -5,8 +5,10 @@ pretty = function(date) {
 	if(diff < 0)
 		day_diff = Math.floor(-1*diff / 86400);
 	
-	if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 )
-			 date.getMonth()+'/'+date.getDay()+'/'+date.getFullYear();
+	if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 ) {
+		return date.getMonth()+'/'+date.getDay()+'/'+date.getFullYear();
+	}
+			
 
 	return day_diff == 0 && (
 				diff < 0 && diff > -60 && "in moments" ||
