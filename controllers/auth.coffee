@@ -12,6 +12,8 @@ module.exports = (app) ->
 
 	# register
 	app.get '/register', (req, res) ->
+		# If open registration is disabled, the user is redirected
+		# to /login, otherwise, don't mess with anything.
 		unless app.set('config').site.open_registration
 			req.flash 'info', 'Registration is disabled. If you have an account, log in.'
 			res.redirect '/login'
@@ -23,6 +25,13 @@ module.exports = (app) ->
 
 		user = _.extend new UserModel, req.body
 
+		# bcrypt, bcrypt, bcrypt, bcrypt
+		#
+		# This helps keep passwords secure. Not because a podcast is
+		# some incredibly sensitive information, but because
+		# securing passwords is good practice **and**
+		# because people often use the same passwords in
+		# *other* places.
 		bcrypt.gen_salt 10, (err, salt) ->
 			bcrypt.encrypt req.body.password, salt, (err, hash) ->
 				user.hash = hash
@@ -40,6 +49,11 @@ module.exports = (app) ->
 			req.flash 'error', 'Invalid Username / Password Combination'
 			res.render 'login', locals: req.body
 
+		# Don't waste any cycles if the email and password 
+		# weren't even submitted. While this maybe only save
+		# a few cycles for the database - why waste time?
+		#
+		# Once the user is found, let him in. Otherwise, **GTFO**
 		if req.body.email and req.body.password
 			UserModel.findOne email: req.body.email, (err, doc) ->
 				if doc
