@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta charset="utf-8"/>
+	<title>{{#site}}{{name}}{{^name}}Bongo Podcast Publisher{{/name}}{{/site}}</title>
+	{{>styles}}
+	{{>scripts}}
+	
+</head>
+<body lang="en">
+	
+<div class="container">
+	
+	<section class="header">
+		<div class="row">
+			<div class="span10 columns">
+				<h1 class="site_name">
+					<a href="/">Bongo Podcast Publisher</a>
+				</h1>
+			</div>
+			<div class="span6 columns">
+				<ul class="horizontal_nav">
+					<li><a id="home" href="/">home</a></li>
+					<li><a id="subscribe" href="/feed">subscribe</a></li>
+					<li><a id="about" href="/about">about</a></li>
+					<li><a id="contact" href="/contact">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	
+	{{>alerts}}
+	
+	
+	{{{yield}}}
+</div>
+
+</body>
+</html>
