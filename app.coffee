@@ -57,6 +57,7 @@ app.dynamicHelpers
 require('./controllers/settings')(app)	# System Settings
 require('./controllers/auth')(app)		# Auth Routes
 require('./controllers/episode')(app)	# Episode Routes
+require('./controllers/cron')(app)		# Queue Processor
 
 # Routes
 app.get '/about', (req, res) ->
