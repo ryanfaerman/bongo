@@ -21,16 +21,17 @@ $(function(){
 		<small>Automatically Released Episodes</small>
 	</h2>
 </div>
+<form id="queue-form" method="post">
 <div class="row">
-	<div class="span4 columns">
+	<div class="span4">
 		<h3>Release Schedule</h3>
 		<p>The Queue gives you a powerful and convenient way to have a consistent release schedule.</p>
 		<p>Adjust the release schedule, then <a href="/admin/publish">publish</a> an episode or episodes.</p>
 	</div>
-	<form id="queue-form" method="post">
+	
 		<input type="hidden" name="_method" value="put">
 		{{#settings}}
-		<div class="span6 columns">
+		<div class="span6">
 				<div class="clearfix">
 					<label id="status">Status</label>
 					<div class="input">
@@ -175,9 +176,9 @@ $(function(){
 			</div>
 		</div>
 		{{/settings}}
-	</form>
+	
 </div>
-
+</form>
 {{#has_episodes}}
 
 <div class="page-header">
@@ -194,64 +195,65 @@ $(function(){
 	<div class="span12 columns">
 		{{#next_up}}
 		<div class="page-header">
-			<h2>
-				<a href="/admin/episode/{{_id}}">{{title}}</a>
-				<small>{{#episode}}Episode #{{episode}} - {{/episode}}<span class="pubdate">{{published}}</span></small>
-			</h2>
+		<h2>
+			<a href="/episode/{{_id}}">{{title}}</a>
+			<small>{{#episode}}Episode #{{episode}} - {{/episode}}<span class="pubdate">{{published}}</span></small>
+		</h2>
+	</div>
+	<!--
+	<div class="row">
+		<div class="span16 summary">
+			{{{summary_html}}}
 		</div>
-		<div class="row">
-			<div class="span12 columns summary">
-				{{{summary_html}}}
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="span4 columns player">
-				<div class="well">
-					<h4>Listen</h4>
-					<audio controls="controls">
-						<source src="/uploads/{{file}}" type="audio/mpeg" />
-						<!--[if gt IE 6]>
-						<object classid="clsid:6BF52A52-394A-11D3-B153-00C04F79FAA6" width="320" height="45"><!
-						[endif]--><!--[if !IE]><!-->
-						<object type="audio/mpeg" data="/uploads/{{file}}">
-						<!--<![endif]-->
+	</div>
+	-->
+	<div class="row episode">
+		<div class="span4 player">
+				<h4>Listen</h4>			
+				<audio controls="controls">
+					<source src="/uploads/{{file}}" type="{{type}}" />
+					<!--[if gt IE 6]>
+					<object classid="clsid:6BF52A52-394A-11D3-B153-00C04F79FAA6" width="320" height="45"><!
+					[endif]-->
+					<!--[if !IE]><!-->
+					<object type="{{type}}" data="/uploads/{{file}}">
+					<!--<![endif]-->
 						<param name="url" value="/uploads/{{file}}" />
 						<param name="autostart" value="false" />
 						<param name="uiMode" value="full" />
 						<object height="24" width="320" type="application/x-shockwave-flash" data="/swf/player.swf" id="audioplayer">
-						<param name="movie" value="/swf/player.swf" />
-						<param name="FlashVars" value="playerID=audioplayer&amp;soundFile=/uploads/{{file}}" />
+							<param name="movie" value="/swf/player.swf" />
+							<param name="FlashVars" value="playerID=audioplayer&amp;soundFile=/uploads/{{file}}" />
 						</object><!--[if gt IE 6]><!-->
-						</object><!--<![endif]-->
-					</audio>
-
-					<ul class="unstyled">
-						{{#length}}<li><strong>Runtime:</strong> {{length}}</li>{{/length}}
-						<li>
-
-							{{#file}}<strong>Download:</strong> <a href="/uploads/{{file}}">MP3 ({{size_mb}} MB)</a>{{/file}}
-						</li>
-					</ul>
-				</div>
-
-			</div>
-			{{#links}}
-			<section class="links">
-				<div class="span8 columns">
-					<h4>Episode Links</h4>
-				</div>
-				{{% IMPLICIT-ITERATOR %}}	
-				{{#links_html}}
-				<div class="span4 columns">
-					{{{.}}}
-				</div>
-				{{/links_html}}
-			</section>
-			{{/links}}
-
-
+					</object><!--<![endif]-->
+				</audio>
+				
+				<ul class="unstyled">
+					{{#length}}<li><strong>Runtime:</strong> {{length}}</li>{{/length}}
+					<li>
+						 
+						{{#file}}<strong>Download:</strong> <a href="/uploads/{{file}}">MP3 ({{size_mb}} MB)</a>{{/file}}
+					</li>
+				</ul>
+			
 		</div>
+		{{#links}}
+		<div class="span8">
+			{{{summary_html}}}
+			<h4>Episode Links</h4>
+		</div>
+		{{% IMPLICIT-ITERATOR %}}	
+		{{#links_html}}
+		<div class="span4 columns">
+			{{{.}}}
+		</div>
+		{{/links_html}}
+		{{/links}}
+		
+		
+	</div>
+
+
 		{{/next_up}}
 	</div>
 </div>

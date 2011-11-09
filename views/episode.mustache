@@ -5,14 +5,15 @@
 			<small>{{#episode}}Episode #{{episode}} - {{/episode}}<span class="pubdate">{{published}}</span></small>
 		</h2>
 	</div>
+	<!--
 	<div class="row">
-		<div class="span16 columns summary">
+		<div class="span16 summary">
 			{{{summary_html}}}
 		</div>
 	</div>
+	-->
 	<div class="row">
-		<div class="span4 columns player">
-			<div class="well">
+		<div class="span4 player">
 				<h4>Listen</h4>			
 				<audio controls="controls">
 					<source src="/uploads/{{file}}" type="{{type}}" />
@@ -39,21 +40,19 @@
 						{{#file}}<strong>Download:</strong> <a href="/uploads/{{file}}">MP3 ({{size_mb}} MB)</a>{{/file}}
 					</li>
 				</ul>
-			</div>
 			
 		</div>
 		{{#links}}
-		<section class="links">
-			<div class="span12 columns">
-				<h4>Episode Links</h4>
-			</div>
-			{{% IMPLICIT-ITERATOR %}}	
-			{{#links_html}}
-			<div class="span6 columns">
-				{{{.}}}
-			</div>
-			{{/links_html}}
-		</section>
+		<div class="span12">
+			{{{summary_html}}}
+			<h4>Episode Links</h4>
+		</div>
+		{{% IMPLICIT-ITERATOR %}}	
+		{{#links_html}}
+		<div class="span6 columns">
+			{{{.}}}
+		</div>
+		{{/links_html}}
 		{{/links}}
 		
 		

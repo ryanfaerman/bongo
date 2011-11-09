@@ -21,25 +21,25 @@ $ ->
 		<small>Create your episode</small>
 	</h2>
 </div>
-
+<form method="post" class="form-stacked" enctype="multipart/form-data">
 <div class="row">
-	<form method="post" class="form-stacked" enctype="multipart/form-data">
+	
 		{{#method}}<input type="hidden" name="_method" value="{{method}}">{{/method}}
 		{{#_id}}<input type="hidden" name="_id" value="{{_id}}">{{/_id}}
-		<div class="span10 columns">
+		<div class="span10">
 			<fieldset>
 				<legend>Episode Details</legend>
 				<div class="clearfix">
 					<label for="title">Title</label>
 					<div class="input">
-						<input class="xxlarge" id="title" name="title" size="30" type="text" value="{{title}}"/>
+						<input class="span10" id="title" name="title" size="30" type="text" value="{{title}}"/>
 					</div>
 				</div><!-- /clearfix -->
 
 				<div class="clearfix">
 					<label for="summary">Summary</label>
 					<div class="input">
-						<textarea class="xxlarge" id="summary" name="summary" rows="5">{{summary}}</textarea>
+						<textarea class="span10" id="summary" name="summary" rows="5">{{summary}}</textarea>
 						<span class="help-block">Markdown Syntax Supported</span>
 					</div>
 				</div><!-- /clearfix -->
@@ -47,14 +47,14 @@ $ ->
 				<div class="clearfix">
 					<label for="links">Links</label>
 					<div class="input">
-						<textarea class="xxlarge" id="links" name="links" rows="5">{{links}}</textarea>
+						<textarea class="span10" id="links" name="links" rows="5">{{links}}</textarea>
 						<span class="help-block">Markdown Syntax Supported</span>
 					</div>
 				</div><!-- /clearfix -->
 
 			</fieldset>
 		</div>
-		<div class="span5 columns">
+		<div class="span5">
 			
 			<fieldset id="upload-new-file">
 				<legend>Media File</legend>
@@ -64,7 +64,7 @@ $ ->
 					<div class="clearfix">
 						<label for="file">Upload File</label>
 						<div class="input-file">
-							<input class="large" id="file" name="audio" type="file" />
+							<input class="span5" id="file" name="audio" type="file" />
 						</div>
 					</div><!-- /clearfix -->
 
@@ -76,7 +76,7 @@ $ ->
 								<label class="add-on">
 									<input type="checkbox" name="use_remote" value="yes"/>
 								</label>
-								<input class="large" id="remote_file" name="remote_file" size="30" type="text" placeholder="http://example.com/audio.mp3"/>
+								<input class="span4" id="remote_file" name="remote_file" size="30" type="text" placeholder="http://example.com/audio.mp3"/>
 								<span class="help-block">Check this field to download the remote file</span>
 							</div>
 						</div>
@@ -113,7 +113,7 @@ $ ->
 					<label for="release">Release</label>
 					<div class="input">
 						<input type="hidden" name="release-value" value="{{release}}">
-						<select name="release" class="large">
+						<select name="release" class="span4">
 							{{#method}}
 							<option value="published">published</option>
 							<option value="offline">offline</option>
@@ -135,7 +135,7 @@ $ ->
 				<div class="clearfix" style="display: none">
 					<label for="number">Publish Date</label>
 					<div class="input">
-						<input class="large" id="number" name="release_date" value="{{release-date}}" size="30" type="text" />
+						<input class="span4" id="number" name="release_date" value="{{release-date}}" size="30" type="text" />
 						<span class="help-block">Publish on this date</span>
 					</div>
 				</div><!-- /clearfix -->
@@ -143,12 +143,14 @@ $ ->
 		</div>
 		
 		<div class="row">
-			<div class="span16 columms">
+			<div class="span16">
 				<div class="actions">
 					<button type="submit" class="btn primary">Save Episode</button>
 					<button type="reset" class="btn">Cancel</button>
 				</div>
 			</div>
 		</div>
-	</form>
+	
 </div>
+
+</form>
