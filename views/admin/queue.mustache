@@ -37,13 +37,13 @@ $(function(){
 						<ul class="inputs-list">
 							<li>
 								<label>
-									<input type="radio" name="status" value="active" {{#status}}checked{{/status}} />
+									<input type="radio" name="enabled" value="true" {{#enabled}}checked{{/enabled}} />
 									<span>Active</span>
 								</label>
 							</li>
 							<li>
 								<label>
-									<input type="radio" name="status" value="offline" {{^status}}checked{{/status}} />
+									<input type="radio" name="enabled" value="false" {{^enabled}}checked{{/enabled}} />
 									<span>Offline</span>
 								</label>
 							</li>
@@ -52,50 +52,50 @@ $(function(){
 
 					</div>
 				</div><!-- /clearfix -->
-				{{#day}}
+				
 				<div class="clearfix">
 					<label id="day">Day of the Week</label>
 					<div class="input">
 						<ul class="inputs-list">
 							<li>
 								<label>
-									<input type="checkbox" name="day[monday]" {{#monday}}checked{{/monday}} />
+									<input type="checkbox" name="days[monday]" {{#monday}}checked{{/monday}} />
 									<span>Monday</span>
 								</label>
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" name="day[tuesday]"  {{#tuesday}}checked{{/tuesday}} />
+									<input type="checkbox" name="days[tuesday]"  {{#tuesday}}checked{{/tuesday}} />
 									<span>Tuesday</span>
 								</label>
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" name="day[wednesday]" {{#wednesday}}checked{{/wednesday}} />
+									<input type="checkbox" name="days[wednesday]" {{#wednesday}}checked{{/wednesday}} />
 									<span>Wednesday</span>
 								</label>
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" name="day[thursday]" {{#thursday}}checked{{/thursday}}  />
+									<input type="checkbox" name="days[thursday]" {{#thursday}}checked{{/thursday}}  />
 									<span>Thursday</span>
 								</label>
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" name="day[friday]" {{#friday}}checked{{/friday}}  />
+									<input type="checkbox" name="days[friday]" {{#friday}}checked{{/friday}}  />
 									<span>Friday</span>
 								</label>
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" name="day[saturday]" {{#saturday}}checked{{/saturday}} />
+									<input type="checkbox" name="days[saturday]" {{#saturday}}checked{{/saturday}} />
 									<span>Saturday</span>
 								</label>
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" name="day[sunday]" {{#sunday}}checked{{/sunday}} />
+									<input type="checkbox" name="days[sunday]" {{#sunday}}checked{{/sunday}} />
 									<span>Sunday</span>
 								</label>
 							</li>
@@ -103,35 +103,34 @@ $(function(){
 					
 					</div>
 				</div><!-- /clearfix -->
-				{{/day}}
+				
 		</div>
 		<div class="span6 columns">
-			{{#time}}
 			<div class="clearfix">
 				<label id="time">Time of Day</label>
 				<div class="input">
 					<ul class="inputs-list">
 						<li>
 							<label>
-								<input type="checkbox" name="time[morning]" {{#morning}}checked{{/morning}} />
+								<input type="checkbox" name="times[morning]" {{#morning}}checked{{/morning}} />
 								<span>Morning</span>
 							</label>
 						</li>
 						<li>
 							<label>
-								<input type="checkbox" name="time[afternoon]" {{#afternoon}}checked{{/afternoon}} />
+								<input type="checkbox" name="times[afternoon]" {{#afternoon}}checked{{/afternoon}} />
 								<span>Afternoon</span>
 							</label>
 						</li>
 						<li>
 							<label>
-								<input type="checkbox" name="time[evening]" {{#evening}}checked{{/evening}} />
+								<input type="checkbox" name="times[evening]" {{#evening}}checked{{/evening}} />
 								<span>Evening</span>
 							</label>
 						</li>
 						<li>
 							<label>
-								<input type="checkbox" name="time[night]" {{#night}}checked{{/night}} />
+								<input type="checkbox" name="times[night]" {{#night}}checked{{/night}} />
 								<span>Night</span>
 							</label>
 						</li>
@@ -139,27 +138,25 @@ $(function(){
 				
 				</div>
 			</div><!-- /clearfix -->
-			{{/time}}
-			{{#recurrence}}
 			<div class="clearfix">
 				<label id="recurrence">Recurrence</label>
 				<div class="input">
 					<ul class="inputs-list">
 						<li>
 							<label>
-								<input type="radio" name="recurrence[weekly]" {{#weekly}}checked{{/weekly}} />
+								<input type="radio" name="recurrence" value="weekly" {{#weekly}}checked{{/weekly}} />
 								<span>Weekly</span>
 							</label>
 						</li>
 						<li>
 							<label>
-								<input type="radio" name="recurrence[biweekly]" {{#biweekly}}checked{{/biweekly}} />
+								<input type="radio" name="recurrence" value="biweekly" {{#biweekly}}checked{{/biweekly}} />
 								<span>Bi-Weekly</span>
 							</label>
 						</li>
 						<li>
 							<label>
-								<input type="radio" name="recurrence[monthly]" {{#monthly}}checked{{/monthly}} />
+								<input type="radio" name="recurrence" value="monthly" {{#monthly}}checked{{/monthly}} />
 								<span>Monthly</span>
 							</label>
 						</li>
@@ -167,7 +164,6 @@ $(function(){
 				
 				</div>
 			</div><!-- /clearfix -->
-			{{/recurrence}}
 		</div>
 	
 		<div class="row">
