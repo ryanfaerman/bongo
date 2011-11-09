@@ -26,6 +26,7 @@ module.exports = (app) ->
 	# view
 	app.get '/episode/:id', (req, res) ->
 		EpisodeModel.findById req.params.id, (err, doc) ->
+			console.log doc
 			res.render 'episode', locals: doc
 
 	# feed

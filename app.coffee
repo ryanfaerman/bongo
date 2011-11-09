@@ -54,6 +54,7 @@ app.get '/about', (req, res) ->
 	res.render 'about'
 	console.log app.set 'config'
 
+
 app.get '/contact', (req, res) ->
 	res.render 'contact'
 
