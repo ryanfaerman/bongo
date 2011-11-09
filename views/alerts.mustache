@@ -12,6 +12,7 @@
 				</p>
 			</div>
 			{{/success}}
+			{{% IMPLICIT-ITERATOR %}}
 			{{#info}}
 			<div class="alert-message info">
 				<a href="#" class="close">x</a>
@@ -21,6 +22,7 @@
 				</p>
 			</div>
 			{{/info}}
+			{{% IMPLICIT-ITERATOR %}}
 			{{#warning}}
 			<div class="alert-message warning">
 				<a href="#" class="close">x</a>
@@ -30,7 +32,8 @@
 				</p>
 			</div>
 			{{/warning}}
-			{{#error}}
+			{{% IMPLICIT-ITERATOR %}}
+			{{#danger}}
 			<div class="alert-message error">
 				<a href="#" class="close">x</a>
 				<p>
@@ -38,7 +41,7 @@
 					{{.}}
 				</p>
 			</div>
-			{{/error}}
+			{{/danger}}
 			
 		</div>
 	</div>
