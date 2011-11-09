@@ -18,7 +18,7 @@ module.exports = (app) ->
 			req.flash 'info', 'Registration is disabled. If you have an account, log in.'
 			res.redirect '/login'
 		else
-			res.render 'register'
+			res.render 'register', layout: 'bare-layout'
 	
 	app.post '/register', (req, res) ->
 		console.log req.body
@@ -42,12 +42,12 @@ module.exports = (app) ->
 	
 	# login
 	app.get '/login', (req, res) ->
-		res.render 'login'
+		res.render 'login', layout: 'bare-layout'
 	
 	app.post '/login', (req, res) ->
 		invalid = () ->
-			req.flash 'error', 'Invalid Username / Password Combination'
-			res.render 'login', locals: req.body
+			req.flash 'danger', 'Invalid Username / Password Combination'
+			res.render 'login', locals: req.body, layout: 'bare-layout'
 
 		# Don't waste any cycles if the email and password 
 		# weren't even submitted. While this maybe only save
