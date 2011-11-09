@@ -1,0 +1,49 @@
+<!DOCTYPE html>  <html> <head>   <title>config.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="app.html">                 app.coffee               </a>                                           <a class="source" href="config.html">                 config.coffee               </a>                                           <a class="source" href="auth.html">                 auth.coffee               </a>                                           <a class="source" href="cron.html">                 cron.coffee               </a>                                           <a class="source" href="episode.html">                 episode.coffee               </a>                                           <a class="source" href="page.html">                 page.coffee               </a>                                           <a class="source" href="settings.html">                 settings.coffee               </a>                                           <a class="source" href="config.html">                 config.coffee               </a>                                           <a class="source" href="episode.html">                 episode.coffee               </a>                                           <a class="source" href="page.html">                 page.coffee               </a>                                           <a class="source" href="user.html">                 user.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               config.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>Generic requirements</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">mongoose = </span><span class="nx">require</span> <span class="s1">&#39;mongoose&#39;</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Convenience Variables</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">Schema = </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span>
+<span class="nv">ObjectId = </span><span class="nx">Schema</span><span class="p">.</span><span class="nx">ObjectId</span>
+
+<span class="nv">ConfigSchema = </span><span class="k">new</span> <span class="nx">Schema</span>
+	<span class="nv">site:</span>
+		<span class="nv">domain: </span><span class="nb">String</span>
+		<span class="nv">open_registration:</span>
+			<span class="nv">type: </span><span class="nb">Boolean</span>
+			<span class="nv">default: </span><span class="kc">yes</span>
+		<span class="nv">name: </span><span class="nb">String</span>
+		<span class="nv">about:</span>
+			<span class="nv">type: </span><span class="nb">String</span>
+			<span class="nv">default: </span><span class="s2">&quot;Welcome to my lovely podcast&quot;</span>
+	<span class="nv">feed:	</span>
+		<span class="nv">explicit: </span>
+			<span class="nv">type: </span><span class="nb">Boolean</span>
+			<span class="nv">default: </span><span class="kc">no</span>
+		<span class="nv">keywords: </span><span class="p">[</span><span class="nb">String</span><span class="p">]</span>
+		<span class="nv">category: </span><span class="nb">String</span>
+		<span class="nv">subcategory: </span><span class="nb">String</span>
+	<span class="nv">analytics:</span>
+		<span class="nv">google: </span><span class="nb">String</span>
+	<span class="nv">cover_art: </span><span class="nb">String</span>
+	<span class="nv">queue:</span>
+		<span class="nv">enabled: </span>
+			<span class="nv">type: </span><span class="nb">Boolean</span>
+			<span class="nv">default: </span><span class="kc">no</span>
+		<span class="nv">recurrence:</span>
+			<span class="nv">type: </span><span class="nb">String</span>
+			<span class="nv">enum: </span><span class="p">[</span><span class="s1">&#39;weekly&#39;</span><span class="p">,</span> <span class="s1">&#39;biweekly&#39;</span><span class="p">,</span> <span class="s1">&#39;monthly&#39;</span><span class="p">]</span>
+			<span class="nv">default: </span><span class="s1">&#39;weekly&#39;</span>
+		<span class="nv">times: </span>
+			<span class="p">[</span>
+				<span class="nv">type: </span><span class="nb">String</span>
+				<span class="nv">enum: </span><span class="p">[</span><span class="s1">&#39;morning&#39;</span><span class="p">,</span> <span class="s1">&#39;afternoon&#39;</span><span class="p">,</span> <span class="s1">&#39;evening&#39;</span><span class="p">,</span> <span class="s1">&#39;night&#39;</span><span class="p">]</span>
+				<span class="nv">default: </span><span class="s1">&#39;afternoon&#39;</span>
+			<span class="p">]</span>
+		<span class="nv">days:</span>
+			<span class="p">[</span>
+				<span class="nv">type: </span><span class="nb">String</span>
+				<span class="nv">enum: </span><span class="p">[</span><span class="s1">&#39;sunday&#39;</span><span class="p">,</span> <span class="s1">&#39;monday&#39;</span><span class="p">,</span> <span class="s1">&#39;tuesday&#39;</span><span class="p">,</span> <span class="s1">&#39;wednesday&#39;</span><span class="p">,</span> <span class="s1">&#39;thursday&#39;</span><span class="p">,</span> <span class="s1">&#39;friday&#39;</span><span class="p">,</span> <span class="s1">&#39;saturday&#39;</span><span class="p">]</span>
+				<span class="nv">default: </span><span class="s1">&#39;tuesday&#39;</span>
+			<span class="p">]</span>
+		
+
+
+<span class="nv">module.exports = </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span> <span class="s1">&#39;Config&#39;</span><span class="p">,</span> <span class="nx">ConfigSchema</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

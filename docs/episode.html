@@ -1,0 +1,61 @@
+<!DOCTYPE html>  <html> <head>   <title>episode.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="app.html">                 app.coffee               </a>                                           <a class="source" href="config.html">                 config.coffee               </a>                                           <a class="source" href="auth.html">                 auth.coffee               </a>                                           <a class="source" href="cron.html">                 cron.coffee               </a>                                           <a class="source" href="episode.html">                 episode.coffee               </a>                                           <a class="source" href="page.html">                 page.coffee               </a>                                           <a class="source" href="settings.html">                 settings.coffee               </a>                                           <a class="source" href="config.html">                 config.coffee               </a>                                           <a class="source" href="episode.html">                 episode.coffee               </a>                                           <a class="source" href="page.html">                 page.coffee               </a>                                           <a class="source" href="user.html">                 user.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               episode.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="nv">mongoose = </span><span class="nx">require</span> <span class="s1">&#39;mongoose&#39;</span>
+<span class="nv">_ = </span><span class="nx">require</span> <span class="s1">&#39;underscore&#39;</span>
+
+
+<span class="nv">Schema = </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span>
+<span class="nv">ObjectId = </span><span class="nx">Schema</span><span class="p">.</span><span class="nx">ObjectId</span>
+
+
+<span class="nv">EpisodeSchema = </span><span class="k">new</span> <span class="nx">Schema</span>
+	<span class="nv">title: </span>
+		<span class="nv">type: </span><span class="nb">String</span>
+		<span class="nv">required: </span><span class="kc">false</span>
+	<span class="nv">episode: </span>
+		<span class="nv">type: </span><span class="nb">Number</span>
+		<span class="nv">index: </span><span class="kc">true</span>
+		
+	<span class="nv">published: </span>
+		<span class="nv">type: </span><span class="nb">Date</span>
+		<span class="nv">default: </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span>	<span class="c1"># can be in the future, aka &quot;Publish on Date&quot;</span>
+		<span class="nv">index: </span><span class="kc">true</span>
+	<span class="nv">file: </span><span class="nb">String</span>
+	<span class="nv">length: </span><span class="nb">Number</span>
+	<span class="nv">size: </span>
+		<span class="nv">type: </span><span class="nb">Number</span>
+	<span class="nv">type: </span><span class="nb">String</span>			<span class="c1"># mp3, mp4, m4v, etc.</span>
+	<span class="nv">summary: </span><span class="nb">String</span>			<span class="c1"># Markdown text</span>
+	<span class="nv">links: </span><span class="nb">String</span>			<span class="c1"># Markdown Text</span>
+	<span class="nv">release:</span>
+		<span class="nv">type: </span><span class="nb">String</span>
+		<span class="nv">enum: </span><span class="p">[</span><span class="s1">&#39;published&#39;</span><span class="p">,</span> <span class="s1">&#39;queue&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;draft&#39;</span><span class="p">,</span> <span class="s1">&#39;offline&#39;</span><span class="p">]</span>
+		<span class="nv">index: </span><span class="kc">true</span>
+	<span class="nv">processed: </span>
+		<span class="nv">type: </span><span class="nb">Boolean</span>
+		<span class="nv">default: </span><span class="kc">false</span>
+		<span class="nv">index: </span><span class="kc">true</span>
+	<span class="nv">meta:</span>
+		<span class="nv">views: </span><span class="nb">Number</span>
+		<span class="nv">plays: </span><span class="nb">Number</span>
+		<span class="nv">downloads: </span><span class="nb">Number</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Convert Markdown Text to HTML</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">EpisodeSchema</span><span class="p">.</span><span class="nx">virtual</span><span class="p">(</span><span class="s1">&#39;summary_html&#39;</span><span class="p">).</span><span class="nx">get</span> <span class="o">-&gt;</span>
+	<span class="nx">require</span><span class="p">(</span><span class="s1">&#39;markdown&#39;</span><span class="p">).</span><span class="nx">parse</span> <span class="k">this</span><span class="p">.</span><span class="nx">summary</span>
+	
+<span class="nx">EpisodeSchema</span><span class="p">.</span><span class="nx">virtual</span><span class="p">(</span><span class="s1">&#39;size_mb&#39;</span><span class="p">).</span><span class="nx">get</span> <span class="o">-&gt;</span>
+	<span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">size</span><span class="err">/1048576).toFixed 2</span>
+
+<span class="nx">EpisodeSchema</span><span class="p">.</span><span class="nx">virtual</span><span class="p">(</span><span class="s1">&#39;links_html&#39;</span><span class="p">).</span><span class="nx">get</span> <span class="o">-&gt;</span>
+	<span class="nv">lines = </span><span class="nx">_</span><span class="p">.</span><span class="nx">compact</span> <span class="k">this</span><span class="p">.</span><span class="nx">links</span><span class="p">.</span><span class="nx">split</span> <span class="s1">&#39;\r\n&#39;</span>		
+	<span class="nv">cols = </span><span class="p">[[],[]]</span>
+	
+	<span class="nx">_</span><span class="p">.</span><span class="nx">each</span> <span class="nx">lines</span><span class="p">,</span> <span class="nf">(line, index) -&gt;</span>
+		<span class="nv">l = </span><span class="k">if</span> <span class="nx">line</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">)</span> <span class="o">is</span> <span class="o">-</span><span class="mi">1</span> <span class="k">then</span> <span class="s2">&quot;[#{line}](#{line})&quot;</span> <span class="k">else</span> <span class="nx">line</span>	
+		<span class="nv">n = </span><span class="k">if</span> <span class="nx">index</span> <span class="o">&lt;</span> <span class="p">(</span><span class="nx">lines</span><span class="p">.</span><span class="nx">length</span><span class="err">/2) then 0 else 1</span>
+		<span class="nx">cols</span><span class="p">[</span><span class="nx">n</span><span class="p">].</span><span class="nx">push</span> <span class="s2">&quot; * #{l}&quot;</span>
+				
+	<span class="nx">_</span><span class="p">.</span><span class="nx">each</span> <span class="nx">cols</span><span class="p">,</span> <span class="nf">(col, index) -&gt;</span>
+		<span class="nx">cols</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;markdown&#39;</span><span class="p">).</span><span class="nx">parse</span> <span class="nx">col</span><span class="p">.</span><span class="nx">join</span> <span class="s1">&#39;\n&#39;</span>
+		
+	<span class="k">return</span> <span class="nx">cols</span>
+
+<span class="nv">module.exports = </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span> <span class="s1">&#39;Episode&#39;</span><span class="p">,</span> <span class="nx">EpisodeSchema</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

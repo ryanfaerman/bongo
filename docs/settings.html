@@ -1,0 +1,64 @@
+<!DOCTYPE html>  <html> <head>   <title>settings.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="app.html">                 app.coffee               </a>                                           <a class="source" href="config.html">                 config.coffee               </a>                                           <a class="source" href="auth.html">                 auth.coffee               </a>                                           <a class="source" href="cron.html">                 cron.coffee               </a>                                           <a class="source" href="episode.html">                 episode.coffee               </a>                                           <a class="source" href="page.html">                 page.coffee               </a>                                           <a class="source" href="settings.html">                 settings.coffee               </a>                                           <a class="source" href="config.html">                 config.coffee               </a>                                           <a class="source" href="episode.html">                 episode.coffee               </a>                                           <a class="source" href="page.html">                 page.coffee               </a>                                           <a class="source" href="user.html">                 user.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               settings.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="nv">_ = </span><span class="nx">require</span> <span class="s1">&#39;underscore&#39;</span>
+<span class="nv">mongoose = </span><span class="nx">require</span> <span class="s1">&#39;mongoose&#39;</span>
+<span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;../config&#39;</span>
+
+<span class="nx">mongoose</span><span class="p">.</span><span class="nx">connect</span> <span class="s2">&quot;mongodb://#{config.db.host}/#{config.db.db}&quot;</span>
+
+<span class="nv">ConfigModel = </span><span class="nx">require</span> <span class="s1">&#39;../models/config&#39;</span>
+<span class="nv">EpisodeModel = </span><span class="nx">require</span> <span class="s1">&#39;../models/episode&#39;</span>
+
+<span class="nv">module.exports = </span><span class="nf">(app) -&gt;</span>
+	<span class="nx">app</span><span class="p">.</span><span class="nx">configure</span> <span class="o">-&gt;</span>
+		<span class="nx">ConfigModel</span><span class="p">.</span><span class="nx">findOne</span> <span class="p">{},</span> <span class="nf">(err, config) -&gt;</span>
+			<span class="nx">unless</span> <span class="nx">config</span>
+				<span class="nv">config = </span><span class="k">new</span> <span class="nx">ConfigModel</span>
+				<span class="nv">config.queue.days = </span><span class="p">[</span><span class="s1">&#39;tuesday&#39;</span><span class="p">]</span>
+				<span class="nv">config.queue.times = </span><span class="p">[</span><span class="s1">&#39;afternoon&#39;</span><span class="p">]</span>
+				<span class="nx">config</span><span class="p">.</span><span class="nx">save</span><span class="p">()</span>
+			
+			<span class="nx">app</span><span class="p">.</span><span class="nx">set</span> <span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="nx">config</span>
+	
+
+	<span class="nx">app</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;/admin/settings&#39;</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
+		<span class="nx">res</span><span class="p">.</span><span class="nx">render</span> <span class="s1">&#39;admin/settings&#39;</span><span class="p">,</span> <span class="nv">layout: </span><span class="s1">&#39;admin/layout&#39;</span>
+	
+	<span class="nx">app</span><span class="p">.</span><span class="nx">put</span> <span class="s1">&#39;/admin/settings&#39;</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
+		<span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span> <span class="s1">&#39;/admin/settings&#39;</span>
+	</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Queue Manager Routes</p>             </td>             <td class="code">               <div class="highlight"><pre>	<span class="nx">app</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;/admin/queue&#39;</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
+		<span class="nv">queueSettings = </span><span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">).</span><span class="nx">queue</span>
+
+		<span class="nx">EpisodeModel</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nv">release: </span><span class="s1">&#39;queue&#39;</span><span class="p">}).</span><span class="nx">sort</span><span class="p">(</span><span class="s1">&#39;published&#39;</span><span class="p">,</span> <span class="s1">&#39;ascending&#39;</span><span class="p">).</span><span class="nx">execFind</span> <span class="nf">(err, docs) -&gt;</span>
+			<span class="nx">_</span><span class="p">.</span><span class="nx">each</span> <span class="nx">queueSettings</span><span class="p">.</span><span class="nx">days</span><span class="p">,</span> <span class="nf">(e) -&gt;</span>
+				<span class="nx">queueSettings</span><span class="p">[</span><span class="nx">e</span><span class="p">]</span> <span class="o">=</span> <span class="kc">yes</span>
+			
+			<span class="nx">_</span><span class="p">.</span><span class="nx">each</span> <span class="nx">queueSettings</span><span class="p">.</span><span class="nx">times</span><span class="p">,</span> <span class="nf">(e) -&gt;</span>
+				<span class="nx">queueSettings</span><span class="p">[</span><span class="nx">e</span><span class="p">]</span> <span class="o">=</span> <span class="kc">yes</span>
+
+			<span class="nx">queueSettings</span><span class="p">[</span><span class="nx">queueSettings</span><span class="p">.</span><span class="nx">recurrence</span><span class="p">]</span> <span class="o">=</span> <span class="kc">yes</span>
+
+			<span class="nv">locals = </span>
+				<span class="nv">next_up: </span><span class="k">if</span> <span class="nx">docs</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">then</span> <span class="nx">docs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+				<span class="nv">episodes: </span><span class="k">if</span> <span class="nx">docs</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">then</span> <span class="nx">_</span><span class="p">.</span><span class="nx">rest</span><span class="p">(</span><span class="nx">docs</span><span class="p">)</span>
+				<span class="nv">has_episodes: </span><span class="nx">docs</span><span class="p">.</span><span class="nx">length</span>
+				<span class="nv">settings: </span><span class="nx">queueSettings</span>
+			
+			<span class="nx">res</span><span class="p">.</span><span class="nx">render</span> <span class="s1">&#39;admin/queue&#39;</span><span class="p">,</span> <span class="nv">layout: </span><span class="s1">&#39;admin/layout&#39;</span><span class="p">,</span> <span class="nv">locals: </span><span class="nx">locals</span>
+
+	<span class="nx">app</span><span class="p">.</span><span class="nx">put</span> <span class="s1">&#39;/admin/queue&#39;</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
+		
+		<span class="nx">ConfigModel</span><span class="p">.</span><span class="nx">findOne</span> <span class="p">{},</span> <span class="nf">(err, config) -&gt;</span>
+			<span class="nv">config.queue.recurrence	= </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">recurrence</span>
+			<span class="nv">config.queue.days		= </span><span class="nx">_</span><span class="p">.</span><span class="nx">keys</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">days</span>
+			<span class="nv">config.queue.times		= </span><span class="nx">_</span><span class="p">.</span><span class="nx">keys</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">times</span>
+			<span class="nv">config.queue.enabled	= </span><span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">enabled</span> <span class="o">is</span> <span class="s1">&#39;true&#39;</span> <span class="k">then</span> <span class="kc">yes</span> <span class="k">else</span> <span class="kc">no</span>
+			<span class="nx">config</span><span class="p">.</span><span class="nx">save</span><span class="p">()</span>
+
+			<span class="nx">app</span><span class="p">.</span><span class="nx">set</span> <span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="nx">config</span>
+
+		<span class="nx">req</span><span class="p">.</span><span class="nx">flash</span> <span class="s1">&#39;success&#39;</span><span class="p">,</span> <span class="s2">&quot;Your queue settings were saved&quot;</span>
+		<span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span> <span class="s1">&#39;back&#39;</span>
+
+	
+	
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
