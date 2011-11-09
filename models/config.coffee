@@ -1,5 +1,7 @@
+# Generic requirements
 mongoose = require 'mongoose'
 
+# Convenience Variables
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
@@ -23,7 +25,27 @@ ConfigSchema = new Schema
 	analytics:
 		google: String
 	cover_art: String
-
+	queue:
+		enabled: 
+			type: Boolean
+			default: no
+		recurrence:
+			type: String
+			enum: ['weekly', 'biweekly', 'monthly']
+			default: 'weekly'
+		times: 
+			[
+				type: String
+				enum: ['morning', 'afternoon', 'evening', 'night']
+				default: 'afternoon'
+			]
+		days:
+			[
+				type: String
+				enum: ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+				default: 'tuesday'
+			]
+		
 
 
 module.exports = mongoose.model 'Config', ConfigSchema
