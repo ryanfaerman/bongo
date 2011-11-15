@@ -1,26 +1,67 @@
 <div class="page-header">
-	<h2>System Settings <small>Customize your Podcast</small></h2>
+	<h2>System Settings <small>Customize your Publisher</small></h2>
 </div>
 
-<ul class="tabs">
-  <li class="active"><a href="#site">Site</a></li>
-  <li><a href="#feed">Feed</a></li>
-  <li><a href="#analytics">Analytics</a></li>
-</ul>
-
-<div class="row">
-	<form method="post" class="form-stacked">
-		<div class="span12 columns">
+<form method="post" class="form-stacked">
+	<div class="row">
+		<div class="span8">
 			<fieldset>
 				<legend>General</legend>
 				<div class="clearfix">
 					<label for="title">Title</label>
 					<div class="input">
-						<input class="xxlarge" id="title" name="title" size="30" type="text" value="{{title}}"/>
+						<input class="span6" id="title" name="title" type="text" value=""/>
 					</div>
 				</div><!-- /clearfix -->
+
+				<div class="clearfix">
+					<label for="summary">About</label>
+					<div class="input">
+						<textarea class="span7" id="summary" name="summary" rows="5"></textarea>
+						<span class="help-block">Markdown Syntax Supported</span>
+					</div>
+				</div><!-- /clearfix -->
+
 			</fieldset>
 		</div>
-	</form>
 
-</div>
+	</div>
+
+	<div class="row">
+		<div class="span7">
+			<fieldset>
+				<legend>Feed</legend>
+				<div class="clearfix">
+					<label id="status">Rating</label>
+					<div class="input">
+						<ul class="inputs-list">
+							<li>
+								<label>
+									<input type="radio" name="enabled" value="true" {{#enabled}}checked{{/enabled}} />
+									<span>Explicit</span>
+								</label>
+							</li>
+							<li>
+								<label>
+									<input type="radio" name="enabled" value="false" {{^enabled}}checked{{/enabled}} />
+									<span>Everyone</span>
+								</label>
+							</li>
+
+						</ul>
+
+					</div>
+				</div><!-- /clearfix -->
+
+				<div class="clearfix">
+					<label for="summary">About</label>
+					<div class="input">
+						<textarea class="span7" id="summary" name="summary" rows="5"></textarea>
+						<span class="help-block">Markdown Syntax Supported</span>
+					</div>
+				</div><!-- /clearfix -->
+
+			</fieldset>
+		</div>
+	</div>
+</form>

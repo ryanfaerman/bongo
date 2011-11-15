@@ -52,7 +52,7 @@ require('./controllers/cron')(app)		# Queue Processor
 # These just haven't been folded into controllers yet.
 app.get '/about', (req, res) ->
 	res.render 'about'
-	console.log app.set 'config'
+	
 
 
 app.get '/contact', (req, res) ->
