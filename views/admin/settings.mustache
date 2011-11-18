@@ -2,15 +2,15 @@
 	<h2>System Settings <small>Customize your Publisher</small></h2>
 </div>
 
-<form method="post" class="form-stacked">
+<form method="post" class="form-stacked" enctype="multipart/form-data">
 	<div class="row">
-		<div class="span8">
+		<div class="span7">
 			<fieldset>
 				<legend>General</legend>
 				<div class="clearfix">
 					<label for="title">Title</label>
 					<div class="input">
-						<input class="span6" id="title" name="title" type="text" value=""/>
+						<input class="span7" id="title" name="title" type="text" value=""/>
 					</div>
 				</div><!-- /clearfix -->
 
@@ -22,12 +22,40 @@
 					</div>
 				</div><!-- /clearfix -->
 
+				<div class="clearfix">
+					<label for="summary">Google Analytics</label>
+					<div class="input">
+						<input class="span7" id="title" name="keywords" type="text" value=""/>
+						<span class="help-block">The account identifier, e.g., U-153463</span>
+					</div>
+				</div><!-- /clearfix -->
+
+
+				<div class="clearfix">
+					<label id="status">Account Registration</label>
+					<div class="input">
+						<ul class="inputs-list">
+							<li>
+								<label>
+									<input type="radio" name="registration" value="true" />
+									<span>Open</span>
+								</label>
+							</li>
+							<li>
+								<label>
+									<input type="radio" name="registration" value="false" checked />
+									<span>Closed</span>
+								</label>
+							</li>
+
+						</ul>
+
+					</div>
+				</div><!-- /clearfix -->
 			</fieldset>
 		</div>
 
-	</div>
-
-	<div class="row">
+	
 		<div class="span7">
 			<fieldset>
 				<legend>Feed</legend>
@@ -54,14 +82,113 @@
 				</div><!-- /clearfix -->
 
 				<div class="clearfix">
-					<label for="summary">About</label>
+					<label for="summary">Keywords</label>
 					<div class="input">
-						<textarea class="span7" id="summary" name="summary" rows="5"></textarea>
-						<span class="help-block">Markdown Syntax Supported</span>
+						<input class="span7" id="title" name="keywords" type="text" value=""/>
 					</div>
 				</div><!-- /clearfix -->
 
+				<div class="clearfix">
+					<label for="summary">Category</label>
+					<div class="input">
+						<select class="span6">
+							<optgroup label="Arts">
+								<option>Design</option>
+								<option>Fashion &amp; Beauty</option>
+								<option>Food</option>
+								<option>Literature</option>
+								<option>Performing Arts</option>
+								<option>Visual Arts</option>
+							</optgroup>
+
+							<optgroup label="Business">
+								<option>Business News</option>
+								<option>Careers</option>
+								<option>Investing</option>
+								<option>Management &amp; Marketing</option>
+								<option>Shopping</option>
+							</optgroup>
+
+							<option>Comedy</option>
+
+							<optgroup label="Education">
+								<option>Education</option>
+								<option>Education Technology</option>
+								<option>Higher Education</option>
+								<option>K-12</option>
+								<option>Language Courses</option>
+								<option>Training</option>
+							</optgroup>
+
+							<optgroup label="Games &amp; Hobbies">
+								<option>Automotive</option>
+								<option>Aviation</option>
+								<option>Hobbies</option>
+								<option>Other Games</option>
+								<option>Video Games</option>
+							</optgroup>
+
+							<optgroup label="Health">
+								<option>Alternative Health</option>
+								<option>Fitness &amp; Nutrition</option>
+								<option>Self-Help</option>
+								<option>Sexuality</option>
+							</optgroup>
+
+							<option>Kids &amp; Family</option>
+							<option>Music</option>
+							<option>News &amp; Politics</option>
+
+							<optgroup label="Religion &amp; Spirituality">
+								<option>Buddhism</option>
+								<option>Christianity</option>
+								<option>Hinduism</option>
+								<option>Islam</option>
+								<option>Judaism</option>
+								<option>Other</option>
+								<option>Spirituality</option>
+							</optgroup>
+
+							<optgroup label="Science &amp; Medicine">
+								<option>Medicine</option>
+								<option>Natural Sciences</option>
+								<option>Social Sciences</option>
+							</optgroup>
+
+							<optgroup label="Society &amp; Culture">
+								<option>History</option>
+								<option selected="selected">Personal Journals</option>
+								<option>Philosophy</option>
+								<option>Places &amp; Travel</option>
+							</optgroup>
+
+							<optgroup label="Sports &amp; Recreation">
+								<option>Amatuer</option>
+								<option>College &amp; Highschool</option>
+								<option>Outdoor</option>
+								<option>Literature</option>
+								<option>Professional</option>
+							</optgroup>
+
+							<optgroup label="Technology">
+								<option>Gadgets</option>
+								<option>Tech News</option>
+								<option>Podcasting</option>
+								<option>Software How-To</option>
+							</optgroup>
+
+							<option>TV &amp; Film</option>
+						</select>
+					</div>
+				</div><!-- /clearfix -->
+				<div class="clearfix">
+						<label for="file">Cover Art</label>
+						<div class="input-file">
+							<input class="span5" id="file" name="audio" type="file" />
+						</div>
+					</div><!-- /clearfix -->
 			</fieldset>
+
 		</div>
 	</div>
 </form>
