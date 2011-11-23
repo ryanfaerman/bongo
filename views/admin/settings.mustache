@@ -10,14 +10,14 @@
 				<div class="clearfix">
 					<label for="title">Title</label>
 					<div class="input">
-						<input class="span7" id="title" name="title" type="text" value=""/>
+						<input class="span7" id="title" name="title" type="text" value="{{#site}}{{name}}{{/site}}"/>
 					</div>
 				</div><!-- /clearfix -->
 
 				<div class="clearfix">
 					<label for="summary">About</label>
 					<div class="input">
-						<textarea class="span7" id="summary" name="summary" rows="5"></textarea>
+						<textarea class="span7" id="summary" name="summary" rows="5">{{#site}}{{about}}{{/site}}</textarea>
 						<span class="help-block">Markdown Syntax Supported</span>
 					</div>
 				</div><!-- /clearfix -->
@@ -65,13 +65,13 @@
 						<ul class="inputs-list">
 							<li>
 								<label>
-									<input type="radio" name="enabled" value="true" {{#enabled}}checked{{/enabled}} />
+									<input type="radio" name="enabled" value="true" {{#feed}}{{#explicit}}checked{{/explicit}}{{/feed}} />
 									<span>Explicit</span>
 								</label>
 							</li>
 							<li>
 								<label>
-									<input type="radio" name="enabled" value="false" {{^enabled}}checked{{/enabled}} />
+									<input type="radio" name="enabled" value="false" {{#feed}}{{^explicit}}checked{{/explicit}}{{/feed}} />
 									<span>Everyone</span>
 								</label>
 							</li>

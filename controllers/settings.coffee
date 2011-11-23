@@ -20,7 +20,16 @@ module.exports = (app) ->
 	
 
 	app.get '/admin/settings', (req, res) ->
-		res.render 'admin/settings', layout: 'admin/layout'
+		ConfigModel.findOne {domain: req.headers.host}, (err, config) ->
+			unless config
+				config = new ConfigModel
+				config.domain = req.headers.host
+				config.queue.days = ['tuesday']
+				config.queue.times = ['afternoon']
+				config.save()
+			
+			res.render 'admin/settings', layout: 'admin/layout', locals: config
+		
 	
 	app.put '/admin/settings', (req, res) ->
 		res.redirect '/admin/settings'
