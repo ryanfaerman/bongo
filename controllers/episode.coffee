@@ -155,7 +155,11 @@ module.exports = (app) ->
 				db.open (err, db) ->
 					unless err
 						console.log file.name
-						gs = new mongo.GridStore db, file.name, 'w', content_type: file.type
+						meta = 
+							content_type: file.type
+							metadata:
+								filename: file.name
+						gs = new mongo.GridStore db, file.name, 'w', meta
 						gs.writeFile file.path, (err, gs2) ->
 							console.log gs2
 							db.close ->
